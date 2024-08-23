@@ -1,0 +1,11 @@
+{
+  "name": "interact-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:paulinawysakowska/interact-challenge.git",
+  "license": "MIT",
+  "devDependencies": {
+    "playwright": "^1.46.1",
+    "typescript": "^5.5.4"
+  }
+}
