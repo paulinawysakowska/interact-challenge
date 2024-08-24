@@ -11,7 +11,7 @@ export default defineConfig({
     trace: 'on',
     headless: false, 
     launchOptions: {
-      args: ['--start-maximized'],
+      args: ['--start-maximized'], 
     },
     actionTimeout: 0, 
   },
@@ -22,27 +22,30 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         headless: false,
         launchOptions: {
-          args: ['--start-maximized'],
+          args: ['--start-maximized'], 
         },
       },
     },
-    /*
     {
       name: 'firefox',
       use: {
         ...devices['Desktop Firefox'],
+        headless: false,
         launchOptions: {
-          args: ['-width', '1920', '-height', '1080']
-        }
+          args: ['-width', '1920', '-height', '1080'],
+        },
       },
     },
     {
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
-        viewport: { width: 1920, height: 1080 }
+        headless: false,
+        viewport: { width: 1920, height: 1080 }, 
+        launchOptions: {
+          args: ['--start-maximized'], 
+        },
       },
     },
-    */
   ],
 });
