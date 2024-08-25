@@ -35,3 +35,8 @@ playwright/.cache/
 
 # macOS specific
 .DS_Store
+
+# Others
+*.jpg
+*.jpeg
+*.png
