@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class UserDrawer {
     readonly page: Page;
@@ -8,7 +8,9 @@ export class UserDrawer {
     constructor(page: Page) {
         this.page = page;
         this.logOffButton = page.locator('span:text("Log Off")');
-        this.addBlogPostButton = page.locator('ul[aria-labelledby="profile-filter-heading"] li a[href="/blog/post/create/345"]');
+        this.addBlogPostButton = page.locator(
+            'ul[aria-labelledby="profile-filter-heading"] li a[href="/blog/post/create/345"]'
+        );
     }
 
     async isLogOffButtonVisible(): Promise<boolean> {

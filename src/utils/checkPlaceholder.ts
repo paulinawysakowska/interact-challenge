@@ -7,7 +7,9 @@ export async function checkPlaceholder(
     const placeholder = await element.getAttribute('placeholder');
 
     if (placeholder !== expectedPlaceholder) {
-        console.error(`Error: Expected placeholder "${expectedPlaceholder}" but found "${placeholder}" for element: ${element}`);
+        console.error(
+            `Error: Expected placeholder "${expectedPlaceholder}" but found "${placeholder}" for element: ${element}`
+        );
     }
 
     expect(placeholder).toBe(expectedPlaceholder);

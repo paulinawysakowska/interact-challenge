@@ -1,3 +1,3 @@
-export const homePageDict= {
-    urlTxt: '#home'
-}
+export const homePageDict = {
+    urlTxt: '#home',
+};
