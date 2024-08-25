@@ -36,9 +36,12 @@ test('Add Blog Post', async ({ page }, testInfo) => {
     await addBlogPost.uploadBlogImage();
     await addBlogPost.checkRemoveBackgroundButtonVisible();
 
+    const randomTitle = await addBlogPost.fillTitleWithRandomText();
+    // TO DO: Uncomment the line below when the bug is fixed
+    // const randomContent = await addBlogPost.fillContentWithRandomText();
+
     await attachScreenshot(testInfo, page, screenshotLabel);
 
-    const randomTitle = await addBlogPost.fillTitleWithRandomText();
     await addBlogPost.fillSummaryWithRandomText();
 
     await attachScreenshot(testInfo, page, screenshotLabel);
@@ -71,7 +74,9 @@ test('Add Blog Post', async ({ page }, testInfo) => {
     );
 
     await postPage.verifyPostPageUrl();
-    await postPage.werifyPublishedPostTitle(randomTitle);
+    await postPage.verifyPublishedPostTitle(randomTitle);
+    // TO DO: Uncomment the line below when the bug is fixed
+    // await postPage.verifyPublishedPostContent(randomContent);
 
     await attachScreenshot(testInfo, page, screenshotLabel);
 });
