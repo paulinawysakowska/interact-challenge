@@ -1,11 +1,13 @@
 import { Locator, expect } from '@playwright/test';
 
-export async function checkTextContent(locator: Locator, expectedText: string) {
-    const actualText = await locator.textContent();
-
-    if (actualText?.trim() !== expectedText) {
-        console.error(`Error: Expected text "${expectedText}" but found "${actualText?.trim()}" for locator: ${locator}`);
+export async function checkTextContent(locator: Locator, expectedText: string): Promise<void> {
+    let actualText = await locator.textContent();
+    
+    if (!actualText?.trim()) {
+        actualText = await locator.getAttribute('value');
     }
 
-    await expect(locator).toHaveText(expectedText);
+    const trimmedText = actualText?.trim();
+
+    expect(trimmedText).toBe(expectedText);
 }
