@@ -7,8 +7,21 @@
   "devDependencies": {
     "@playwright/test": "^1.46.1",
     "@types/node": "^22.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.2.0",
+    "@typescript-eslint/parser": "^8.2.0",
+    "eslint": "8.x.x",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "playwright": "^1.46.1",
+    "prettier": "^3.3.3",
     "typescript": "^5.5.4"
+  },
+  "scripts": {
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "format": "prettier --write 'src/**/*.{ts,tsx,json,css,md}'",
+    "format:all": "yarn format && yarn lint:fix",
+    "check:lint": "yarn format && yarn lint"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",

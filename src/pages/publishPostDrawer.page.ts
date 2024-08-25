@@ -1,17 +1,17 @@
-import { expect, Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 import { publishPostDrawerDict } from '../dicts/publishPostDrawerDict';
 import { checkIfTextVisible } from '../utils/checkIfTextVisible';
 import { isSwitchButtonChecked } from '../utils/checkSwitchButton';
 
 export class PublishPostDrawer {
     readonly page: Page;
-    readonly switchButton: any;
-    readonly saveButton: any;
+    readonly switchButton: Locator;
+    readonly saveButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.switchButton = page.getByRole('dialog').locator('label')
-        this.saveButton = page.getByRole('link', { name: 'Save' })
+        this.switchButton = page.getByRole('dialog').locator('label');
+        this.saveButton = page.getByRole('link', { name: 'Save' });
     }
 
     async verifyTextsAreVisible(): Promise<void> {
@@ -29,15 +29,19 @@ export class PublishPostDrawer {
     async verifySwitchButtonIsUnchecked(): Promise<boolean> {
         const isChecked = await isSwitchButtonChecked(this.switchButton);
         if (isChecked) {
-            console.error('Switch button is checked, but it should be unchecked.');
+            console.error(
+                'Switch button is checked, but it should be unchecked.'
+            );
         }
         return !isChecked;
     }
-    
+
     async verifySwitchButtonIsChecked(): Promise<boolean> {
         const isChecked = await isSwitchButtonChecked(this.switchButton);
         if (!isChecked) {
-            console.error('Switch button is unchecked, but it should be checked.');
+            console.error(
+                'Switch button is unchecked, but it should be checked.'
+            );
         }
         return isChecked;
     }

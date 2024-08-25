@@ -8,7 +8,7 @@ export class PostPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.postTitle = page.locator('h1'); 
+        this.postTitle = page.locator('h1');
     }
 
     async verifyPostPageUrl(): Promise<void> {
@@ -18,6 +18,8 @@ export class PostPage {
     async werifyPublishedPostTitle(randomTitle: string): Promise<void> {
         await this.page.waitForSelector('h1', { timeout: 50000 });
 
-        await expect(this.postTitle).toHaveText(randomTitle, { timeout: 50000 });
+        await expect(this.postTitle).toHaveText(randomTitle, {
+            timeout: 50000,
+        });
     }
 }

@@ -21,7 +21,8 @@ export async function handleErrorsAndCompleteBlogPostSubmission(
     if (isTitleErrorVisible || isContentErrorVisible) {
         await addBlogPost.selectContinueButton();
 
-        const isSwitchChecked = await publishPostDrawer.verifySwitchButtonIsChecked();
+        const isSwitchChecked =
+            await publishPostDrawer.verifySwitchButtonIsChecked();
 
         if (!isSwitchChecked) {
             await publishPostDrawer.clickSwitchButton();

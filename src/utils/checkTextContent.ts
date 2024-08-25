@@ -1,8 +1,11 @@
 import { Locator, expect } from '@playwright/test';
 
-export async function checkTextContent(locator: Locator, expectedText: string): Promise<void> {
+export async function checkTextContent(
+    locator: Locator,
+    expectedText: string
+): Promise<void> {
     let actualText = await locator.textContent();
-    
+
     if (!actualText?.trim()) {
         actualText = await locator.getAttribute('value');
     }

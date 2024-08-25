@@ -4,4 +4,4 @@ export const publishPostDrawerDict = {
     // saveTxt: 'Save',
     // yesTxt: 'Yes',
     // noTxt: 'No',
-}
+};
