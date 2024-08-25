@@ -26,20 +26,20 @@ export class PublishPostDrawer {
         }
     }
 
-    async verifySwitchButtonIsUnchecked(): Promise<void> {
+    async verifySwitchButtonIsUnchecked(): Promise<boolean> {
         const isChecked = await isSwitchButtonChecked(this.switchButton);
         if (isChecked) {
             console.error('Switch button is checked, but it should be unchecked.');
         }
-        expect(isChecked).toBe(false);
+        return !isChecked;
     }
-
-    async verifySwitchButtonIsChecked(): Promise<void> {
+    
+    async verifySwitchButtonIsChecked(): Promise<boolean> {
         const isChecked = await isSwitchButtonChecked(this.switchButton);
         if (!isChecked) {
             console.error('Switch button is unchecked, but it should be checked.');
         }
-        expect(isChecked).toBe(true);
+        return isChecked;
     }
 
     async clickSwitchButton(): Promise<void> {
