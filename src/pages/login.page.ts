@@ -28,8 +28,9 @@ export class LoginPage {
         await this.page.goto(process.env.URL || '');
     }
 
-    async isLogoVisible(): Promise<boolean> {
-        return await this.logoImage.isVisible();
+    async isLogoVisible(): Promise<void> {
+        const isVisible = await this.logoImage.isVisible();
+        expect(isVisible).toBe(true);
     }
 
     async checkLoginPagePlaceholders() {

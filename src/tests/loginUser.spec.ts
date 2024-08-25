@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { attachScreenshot } from '../utils/attachScreenshot';
 import { HomePage } from '../pages/homePage.page';
@@ -16,8 +16,7 @@ test('Login user', async ({ page }, testInfo) => {
     const loginPage = new LoginPage(page);
     const homePage = new HomePage(page);
 
-    const isLogoVisible = await loginPage.isLogoVisible();
-    expect(isLogoVisible).toBe(true);
+    await loginPage.isLogoVisible();
 
     await loginPage.checkLoginPageLabels();
 
