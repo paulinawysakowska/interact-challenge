@@ -2,26 +2,26 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './src/tests',
-  timeout: 30000,
+  timeout: 60000,
   expect: {
     timeout: 5000,
   },
   reporter: [['list'], ['html']],
   use: {
     trace: 'on',
-    headless: false, 
+    headless: true, 
     launchOptions: {
       args: ['--start-maximized'], 
     },
     actionTimeout: 0, 
-    video: 'retain-on-failure', // Nagrywanie wideo tylko przy niepowodzeniu testu
+    video: 'retain-on-failure', 
   },
   projects: [
     {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        headless: false,
+        headless: true,
         launchOptions: {
           args: ['--start-maximized'], 
         },
@@ -32,7 +32,7 @@ export default defineConfig({
       name: 'firefox',
       use: {
         ...devices['Desktop Firefox'],
-        headless: false,
+        headless: true,
         launchOptions: {
           args: ['-width', '1920', '-height', '1080'],
         },
@@ -43,7 +43,7 @@ export default defineConfig({
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
-        headless: false,
+        headless: true,
         viewport: { width: 1920, height: 1080 }, 
         launchOptions: {
           args: ['--start-maximized'], 

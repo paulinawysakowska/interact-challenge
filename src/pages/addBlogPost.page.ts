@@ -125,18 +125,16 @@ export class AddBlogPost {
         return randomTitle;
     }
 
-    // https://jamesroberts-trial.interactgo.com/blog/post/create/345
-    // https://jamesroberts-trial.interactgo.com/blog/69/post/2222
-
     async fillSummaryWithRandomText(): Promise<void> {
         const randomSummary = generateRandomText(this.summaryWordCount);
         await this.postSummaryTextFiled.fill(randomSummary);
     }
 
-    async fillContentWithRandomText(): Promise<void> {
+    async fillContentWithRandomText(): Promise<string> {
         const randomContent = generateRandomText(this.contentWordCount);
         await this.postContentTextFiled.fill(randomContent);
         await this.postContentTextFiled.press('Tab');
+        return randomContent;
     }
 
     async selectContinueButton(): Promise<void> {
