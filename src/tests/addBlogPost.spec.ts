@@ -3,6 +3,7 @@ import { AddBlogPost } from '../pages/addBlogPost.page';
 import { HomePage } from '../pages/homePage.page';
 import { PublishPostDrawer } from '../pages/publishPostDrawer.page';
 import { UserDrawer } from '../pages/userDrawer.page';
+import { handleErrorsAndCompleteBlogPostSubmission } from '../utils/handleError';
 
 test.beforeEach(async ({ loginAsUser }) => {
   await loginAsUser();
@@ -27,25 +28,28 @@ test('Add Blog Post', async ({ page }) => {
   await addBlogPost.checkRemoveBackgroundButtonVisible();
 
   await addBlogPost.fillTitleWithRandomText();
-  await page.waitForTimeout(3000);  
   await addBlogPost.fillSummaryWithRandomText();
-  await page.waitForTimeout(3000);  
   await addBlogPost.fillContentWithRandomText();
-  await page.waitForTimeout(3000);  
   await addBlogPost.checkIfFieldsAreNotEmpty();
   await addBlogPost.selectContinueButton();
 
-  // await publishPostDrawer.verifyTextsAreVisible();
-  // await publishPostDrawer.verifySwitchButtonIsUnchecked(); 
+  await publishPostDrawer.verifyTextsAreVisible();
+  await publishPostDrawer.verifySwitchButtonIsUnchecked(); 
   await publishPostDrawer.clickSwitchButton();
-  // await publishPostDrawer.verifySwitchButtonIsChecked();
-  await publishPostDrawer.clickSaveButton();
-  await page.waitForTimeout(3000);
-  await addBlogPost.fillContentWithRandomText();
-  await page.waitForTimeout(3000);
-  await addBlogPost.selectContinueButton();
-  await publishPostDrawer.clickSwitchButton();
+  await publishPostDrawer.verifySwitchButtonIsChecked();
   await publishPostDrawer.clickSaveButton();
 
+  // Step below can be removed when the bug is fixed
+  await handleErrorsAndCompleteBlogPostSubmission(addBlogPost, publishPostDrawer);
 
+  
 });
+
+/*
+TO DO: 
+- Add log out after test
+- Add cleanup after test
+- Fix the bug with post publishing
+- Analyze, why subtitles are not visible on the post published page
+- Analyze if actions on the Home Page can be moved to the 'beforeEach' hook
+*/

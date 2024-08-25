@@ -24,6 +24,9 @@ export class AddBlogPost {
     private readonly contentWordCount: number = 20; 
     readonly fieldChecks: { element: Locator; fieldName: string; }[];
     readonly continueButton: Locator;
+    readonly postTitleErrorMsg: Locator;
+    readonly contentErrorMsg: Locator;
+
 
     constructor(page: Page) {
         this.page = page;
@@ -35,6 +38,8 @@ export class AddBlogPost {
         this.postSummaryTextFiled = page.locator('p[aria-label="Post Summary"]');
         this.postContentTextFiled = page.getByRole('textbox', { name: 'Rich Text Editor,' });
         this.continueButton = page.locator('a[aria-label="Continue"]');
+        this.postTitleErrorMsg = page.locator(`text=${addBlogPostDict.postTitleErrorMsg}`);
+        this.contentErrorMsg = page.locator(`text=${addBlogPostDict.contentErrorMsg}`);
 
         this.fieldChecks = [
             { element: this.postTitleTextFiled, fieldName: 'Title' },
@@ -43,8 +48,22 @@ export class AddBlogPost {
         ];
     }
         
+    // async checkForErrorsAndRefillFields(): Promise<void> {
+    //     const isTitleErrorVisible = await this.postTitleErrorMsg.isVisible();
+    //     const isContentErrorVisible = await this.contentErrorMsg.isVisible();
+
+    //     if (isTitleErrorVisible) {
+    //         console.warn('Title error is visible. Refilling title...');
+    //         await this.fillTitleWithRandomText();
+    //     }
+
+    //     if (isContentErrorVisible) {
+    //         console.warn('Content error is visible. Refilling content...');
+    //         await this.fillContentWithRandomText();
+    //     }
+    // }
     
-    
+
     async verifyHomeUrl(): Promise<void> {
             await verifyUrlContains(this.page, addBlogPostDict.urlTxt);
         }
@@ -83,7 +102,6 @@ export class AddBlogPost {
     }
     
     
-
     async uploadBlogImage(): Promise<void> {
         await uploadFile(this.upladImageButton, this.imagePath);
 
