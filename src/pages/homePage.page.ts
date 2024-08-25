@@ -1,5 +1,5 @@
 import { Page, Locator } from '@playwright/test';
-import { verifyUrlContains } from '../utils/verifyUrlContains';
+import { verifyUrl } from '../utils/verifyUrlContains';
 import { homePageDict } from '../dicts/homePageDict';
 
 
@@ -14,7 +14,7 @@ export class HomePage {
     }
     
     async verifyHomeUrl(): Promise<void> {
-            await verifyUrlContains(this.page, homePageDict.urlTxt);
+            await verifyUrl(this.page, homePageDict.urlTxt, true);
         }
 
     async clickAvatarButton(): Promise<void> {
