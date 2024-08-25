@@ -1,0 +1,17 @@
+# Ignore build, dist, node_modules, etc.
+node_modules/
+dist/
+build/
+test-results/
+
+# Ignore automatically generated files
+package-lock.json
+yarn.lock
+
+# Ignore editor-specific data
+*.log
+*.cache
+
+# Ignore files that don't need to be formatted by Prettier
+public/
+static/
