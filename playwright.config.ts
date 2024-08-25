@@ -14,6 +14,7 @@ export default defineConfig({
       args: ['--start-maximized'], 
     },
     actionTimeout: 0, 
+    video: 'retain-on-failure', // Nagrywanie wideo tylko przy niepowodzeniu testu
   },
   projects: [
     {
@@ -24,6 +25,7 @@ export default defineConfig({
         launchOptions: {
           args: ['--start-maximized'], 
         },
+        video: 'retain-on-failure',
       },
     },
     {
@@ -34,6 +36,7 @@ export default defineConfig({
         launchOptions: {
           args: ['-width', '1920', '-height', '1080'],
         },
+        video: 'retain-on-failure',
       },
     },
     {
@@ -45,6 +48,7 @@ export default defineConfig({
         launchOptions: {
           args: ['--start-maximized'], 
         },
+        video: 'retain-on-failure',
       },
     },
   ],

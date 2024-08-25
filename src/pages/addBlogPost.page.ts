@@ -1,5 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { verifyUrlContains } from '../utils/verifyUrlContains';
+import { verifyUrl } from '../utils/verifyUrlContains';
 import { addBlogPostDict } from '../dicts/addBlogPostDict';
 import { uploadFile } from '../utils/uploadFile';
 import { checkIfElementNotVisible } from '../utils/checkIfElementNotVisible';
@@ -48,24 +48,9 @@ export class AddBlogPost {
         ];
     }
         
-    // async checkForErrorsAndRefillFields(): Promise<void> {
-    //     const isTitleErrorVisible = await this.postTitleErrorMsg.isVisible();
-    //     const isContentErrorVisible = await this.contentErrorMsg.isVisible();
-
-    //     if (isTitleErrorVisible) {
-    //         console.warn('Title error is visible. Refilling title...');
-    //         await this.fillTitleWithRandomText();
-    //     }
-
-    //     if (isContentErrorVisible) {
-    //         console.warn('Content error is visible. Refilling content...');
-    //         await this.fillContentWithRandomText();
-    //     }
-    // }
     
-
     async verifyHomeUrl(): Promise<void> {
-            await verifyUrlContains(this.page, addBlogPostDict.urlTxt);
+            await verifyUrl(this.page, addBlogPostDict.urlTxt, true);
         }
     
     async checkAddBlogPostPagePlaceholders() {
@@ -117,11 +102,15 @@ export class AddBlogPost {
 
         }
     
-    async fillTitleWithRandomText(): Promise<void> {
+    async fillTitleWithRandomText(): Promise<string> {
         const randomTitle = generateRandomText(this.titleWordCount);
         await this.postTitleTextFiled.type(randomTitle);
         await this.postTitleTextFiled.press('Tab');
+        return randomTitle; 
         }
+    
+        // https://jamesroberts-trial.interactgo.com/blog/post/create/345    
+        // https://jamesroberts-trial.interactgo.com/blog/69/post/2222
 
     async fillSummaryWithRandomText(): Promise<void> {
         const randomSummary = generateRandomText(this.summaryWordCount);

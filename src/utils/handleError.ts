@@ -27,6 +27,6 @@ export async function handleErrorsAndCompleteBlogPostSubmission(
             await publishPostDrawer.clickSwitchButton();
         }
 
-        // await publishPostDrawer.clickSaveButton();
+        await publishPostDrawer.clickSaveButton();
     }
 }
