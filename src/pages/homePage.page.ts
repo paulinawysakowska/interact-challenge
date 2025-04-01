@@ -1,7 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 
 import { homePageDict } from '../dicts/homePageDict';
-import { verifyUrl } from '../utils/verifyUrlContains';
+import { verifyUrl } from '../utils/assertions/verifyUrlContains';
 
 export class HomePage {
     readonly page: Page;

@@ -1,5 +1,5 @@
-import { AddBlogPost } from '../pages/addBlogPost.page';
-import { PublishPostDrawer } from '../pages/publishPostDrawer.page';
+import { AddBlogPost } from '../../pages/addBlogPost.page';
+import { PublishPostDrawer } from '../../pages/publishPostDrawer.page';
 
 export async function handleErrorsAndCompleteBlogPostSubmission(
     addBlogPost: AddBlogPost,
