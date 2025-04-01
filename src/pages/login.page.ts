@@ -1,11 +1,12 @@
 import { Page, Locator, expect } from '@playwright/test';
 import * as dotenv from 'dotenv';
-import { checkPlaceholder } from '../utils/checkPlaceholder';
+
 import { loginPageDict } from '../dicts/loginPageDict';
+import { checkFieldIsFilled } from '../utils/checkFieldIsFilled';
 import { checkHiddenLabelText } from '../utils/checkHiddenLabelText';
+import { checkPlaceholder } from '../utils/checkPlaceholder';
 import { checkTextContent } from '../utils/checkTextContent';
 import { enterText } from '../utils/enterText';
-import { checkFieldIsFilled } from '../utils/checkFieldIsFilled';
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ export class LoginPage {
         this.loginButton = page.locator('#loginbtn');
     }
 
-    async goToMainPage() {
+    async goToMainPage(): Promise<void> {
         await this.page.goto(process.env.URL || '');
     }
 
@@ -33,7 +34,7 @@ export class LoginPage {
         expect(isVisible).toBe(true);
     }
 
-    async checkLoginPagePlaceholders() {
+    async checkLoginPagePlaceholders(): Promise<void> {
         const placeholderChecks = [
             {
                 element: this.usernameInput,
@@ -50,7 +51,7 @@ export class LoginPage {
         }
     }
 
-    async checkLoginPageLabels() {
+    async checkLoginPageLabels(): Promise<void> {
         const labelChecks = [
             {
                 forAttribute: 'Username',

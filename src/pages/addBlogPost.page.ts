@@ -1,12 +1,13 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { verifyUrl } from '../utils/verifyUrlContains';
+
 import { addBlogPostDict } from '../dicts/addBlogPostDict';
-import { uploadFile } from '../utils/uploadFile';
 import { checkIfElementNotVisible } from '../utils/checkIfElementNotVisible';
 import { checkIfElementVisible } from '../utils/checkIfElementVisible';
 import { checkPlaceholder } from '../utils/checkPlaceholder';
-import { generateRandomText } from '../utils/generateRandomText';
 import { checkTextFieldEmptyStatus } from '../utils/checkTextFieldEmptyStatus';
+import { generateRandomText } from '../utils/generateRandomText';
+import { uploadFile } from '../utils/uploadFile';
+import { verifyUrl } from '../utils/verifyUrlContains';
 
 export class AddBlogPost {
     readonly page: Page;
@@ -60,7 +61,7 @@ export class AddBlogPost {
         await verifyUrl(this.page, addBlogPostDict.urlTxt, true);
     }
 
-    async checkAddBlogPostPagePlaceholders() {
+    async checkAddBlogPostPagePlaceholders(): Promise<void> {
         const placeholderChecks = [
             {
                 element: this.postTitleTextFiled,
@@ -81,7 +82,7 @@ export class AddBlogPost {
         }
     }
 
-    async checkIfFieldsAreEmpty() {
+    async checkIfFieldsAreEmpty(): Promise<void> {
         for (const check of this.fieldChecks) {
             const isEmpty = await checkTextFieldEmptyStatus(check.element);
             if (!isEmpty) {
@@ -94,7 +95,7 @@ export class AddBlogPost {
         }
     }
 
-    async checkIfFieldsAreNotEmpty() {
+    async checkIfFieldsAreNotEmpty(): Promise<void> {
         for (const check of this.fieldChecks) {
             const isEmpty = await checkTextFieldEmptyStatus(check.element);
             if (isEmpty) {

@@ -4,7 +4,7 @@ export async function attachScreenshot(
     testInfo: TestInfo,
     page: Page,
     label: string
-) {
+): Promise<void> {
     await testInfo.attach(label, {
         body: await page.screenshot({ fullPage: true }),
         contentType: 'image/png',

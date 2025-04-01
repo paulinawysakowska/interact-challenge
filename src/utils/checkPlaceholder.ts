@@ -3,7 +3,7 @@ import { Locator, expect } from '@playwright/test';
 export async function checkPlaceholder(
     element: Locator,
     expectedPlaceholder: string
-) {
+): Promise<void> {
     const placeholder = await element.getAttribute('placeholder');
 
     if (placeholder !== expectedPlaceholder) {

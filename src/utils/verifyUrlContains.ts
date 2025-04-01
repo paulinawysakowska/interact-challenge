@@ -6,7 +6,7 @@ export async function verifyUrl(
     shouldContain = true,
     timeout = 3000,
     retries = 10
-) {
+): Promise<void> {
     for (let i = 0; i < retries; i++) {
         try {
             if (shouldContain) {
