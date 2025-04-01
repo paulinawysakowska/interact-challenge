@@ -2,7 +2,7 @@ import { test as baseTest } from '@playwright/test';
 
 import { HomePage } from '../pages/homePage.page';
 import { LoginPage } from '../pages/login.page';
-import { attachScreenshot } from '../utils/screenshots/attachScreenshot';
+import { attachScreenshot } from '../utils/screenshots/attachScreenshot.util';
 
 const screenshotLabel = 'log-in-fixture';
 

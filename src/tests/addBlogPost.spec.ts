@@ -4,8 +4,8 @@ import { HomePage } from '../pages/homePage.page';
 import { PostPage } from '../pages/postPage.page';
 import { PublishPostDrawer } from '../pages/publishPostDrawer.page';
 import { UserDrawer } from '../pages/userDrawer.page';
-import { handleErrorsAndCompleteBlogPostSubmission } from '../utils/helpers/handleError';
-import { attachScreenshot } from '../utils/screenshots/attachScreenshot';
+import { handleErrorsAndCompleteBlogPostSubmission } from '../utils/helpers/handleError.util';
+import { attachScreenshot } from '../utils/screenshots/attachScreenshot.util';
 
 const screenshotLabel = 'add-blog-post-test';
 
