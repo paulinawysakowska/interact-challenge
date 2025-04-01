@@ -3,11 +3,14 @@ module.exports = {
     node: true,
   },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier', 'import'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
   ],
   parserOptions: {
     ecmaVersion: 2020,
@@ -16,7 +19,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'error',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-empty-function': 'error',
     '@typescript-eslint/no-namespace': 'error',
@@ -26,5 +29,17 @@ module.exports = {
     '@typescript-eslint/no-inferrable-types': 'error',
     '@typescript-eslint/no-this-alias': 'error',
     'prettier/prettier': 'error',
+    'import/order': [
+            'error',
+            {
+                groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
+                'newlines-between': 'always',
+                alphabetize: {
+                    order: 'asc',
+                    caseInsensitive: true,
+                },
+            },
+        ],
+        'import/no-duplicates': 'error',
   },
 };
