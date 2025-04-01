@@ -1,13 +1,15 @@
 import { Page, Locator, expect } from '@playwright/test';
 
-import { addBlogPostDict } from '../dicts/addBlogPost.dict';
-import { checkPlaceholder } from '../utils/assertions/checkPlaceholder.util';
-import { checkTextFieldEmptyStatus } from '../utils/assertions/checkTextFieldEmptyStatus.util';
-import { verifyUrl } from '../utils/assertions/verifyUrlContains.util';
-import { uploadFile } from '../utils/files/uploadFile.util';
-import { generateRandomText } from '../utils/helpers/generateRandomText.util';
-import { checkIfElementNotVisible } from '../utils/visibility/checkIfElementNotVisible.util';
-import { checkIfElementVisible } from '../utils/visibility/checkIfElementVisible.util';
+import { addBlogPostDict } from '@dicts';
+import {
+    checkIfElementNotVisible,
+    checkIfElementVisible,
+    checkPlaceholder,
+    checkTextFieldEmptyStatus,
+    generateRandomText,
+    uploadFile,
+    verifyUrl,
+} from '@utils';
 
 export class AddBlogPost {
     readonly page: Page;
@@ -15,7 +17,6 @@ export class AddBlogPost {
     readonly upladImageButton: Locator;
     private readonly imagePath: string;
     readonly removeBackgroundButton: Locator;
-    readonly uploadImagePlaceholder: Locator;
     readonly postTitleTextFiled: Locator;
     readonly postSummaryTextFiled: Locator;
     readonly postContentTextFiled: Locator;

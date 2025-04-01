@@ -42,4 +42,14 @@ module.exports = {
         ],
         'import/no-duplicates': 'error',
   },
-};
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.json',
+      },
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
+}

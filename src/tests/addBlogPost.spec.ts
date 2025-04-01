@@ -1,11 +1,15 @@
-import { test } from '../fixtures/loginFixture';
-import { AddBlogPost } from '../pages/addBlogPost.page';
-import { HomePage } from '../pages/homePage.page';
-import { PostPage } from '../pages/postPage.page';
-import { PublishPostDrawer } from '../pages/publishPostDrawer.page';
-import { UserDrawer } from '../pages/userDrawer.page';
-import { handleErrorsAndCompleteBlogPostSubmission } from '../utils/helpers/handleError.util';
-import { attachScreenshot } from '../utils/screenshots/attachScreenshot.util';
+import { test } from '@fixtures';
+import {
+    AddBlogPost,
+    HomePage,
+    PostPage,
+    PublishPostDrawer,
+    UserDrawer,
+} from '@pages';
+import {
+    attachScreenshot,
+    handleErrorsAndCompleteBlogPostSubmission,
+} from '@utils';
 
 const screenshotLabel = 'add-blog-post-test';
 

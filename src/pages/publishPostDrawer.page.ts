@@ -1,8 +1,7 @@
 import { expect, Locator, Page } from '@playwright/test';
 
-import { publishPostDrawerDict } from '../dicts/publishPostDrawer.dict';
-import { isSwitchButtonChecked } from '../utils/assertions/checkSwitchButton.util';
-import { checkIfTextVisible } from '../utils/visibility/checkIfTextVisible.util';
+import { publishPostDrawerDict } from '@dicts';
+import { checkIfTextVisible, isSwitchButtonChecked } from '@utils';
 
 export class PublishPostDrawer {
     readonly page: Page;

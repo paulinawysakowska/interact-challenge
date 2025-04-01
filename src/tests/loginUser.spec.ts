@@ -1,8 +1,7 @@
 import { test } from '@playwright/test';
 
-import { HomePage } from '../pages/homePage.page';
-import { LoginPage } from '../pages/login.page';
-import { attachScreenshot } from '../utils/screenshots/attachScreenshot.util';
+import { LoginPage, HomePage } from '@pages';
+import { attachScreenshot } from '@utils';
 
 const screenshotLabel = 'log-in-test';
 

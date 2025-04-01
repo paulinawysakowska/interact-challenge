@@ -1,12 +1,14 @@
 import { Page, Locator, expect } from '@playwright/test';
 import * as dotenv from 'dotenv';
 
-import { loginPageDict } from '../dicts/loginPage.dict';
-import { checkFieldIsFilled } from '../utils/assertions/checkFieldIsFilled.util';
-import { checkPlaceholder } from '../utils/assertions/checkPlaceholder.util';
-import { checkTextContent } from '../utils/assertions/checkTextContent.util';
-import { enterText } from '../utils/input/enterText.util';
-import { checkHiddenLabelText } from '../utils/visibility/checkHiddenLabelText.util';
+import { loginPageDict } from '@dicts';
+import {
+    checkPlaceholder,
+    checkHiddenLabelText,
+    checkTextContent,
+    enterText,
+    checkFieldIsFilled,
+} from '@utils';
 
 dotenv.config();
 
