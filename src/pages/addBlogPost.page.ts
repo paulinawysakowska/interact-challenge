@@ -61,7 +61,7 @@ export class AddBlogPost {
         await verifyUrl(this.page, addBlogPostDict.urlTxt, true);
     }
 
-    async checkAddBlogPostPagePlaceholders() {
+    async checkAddBlogPostPagePlaceholders(): Promise<void> {
         const placeholderChecks = [
             {
                 element: this.postTitleTextFiled,
@@ -82,7 +82,7 @@ export class AddBlogPost {
         }
     }
 
-    async checkIfFieldsAreEmpty() {
+    async checkIfFieldsAreEmpty(): Promise<void> {
         for (const check of this.fieldChecks) {
             const isEmpty = await checkTextFieldEmptyStatus(check.element);
             if (!isEmpty) {
@@ -95,7 +95,7 @@ export class AddBlogPost {
         }
     }
 
-    async checkIfFieldsAreNotEmpty() {
+    async checkIfFieldsAreNotEmpty(): Promise<void> {
         for (const check of this.fieldChecks) {
             const isEmpty = await checkTextFieldEmptyStatus(check.element);
             if (isEmpty) {

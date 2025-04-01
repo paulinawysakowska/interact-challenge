@@ -25,7 +25,7 @@ export class LoginPage {
         this.loginButton = page.locator('#loginbtn');
     }
 
-    async goToMainPage() {
+    async goToMainPage(): Promise<void> {
         await this.page.goto(process.env.URL || '');
     }
 
@@ -34,7 +34,7 @@ export class LoginPage {
         expect(isVisible).toBe(true);
     }
 
-    async checkLoginPagePlaceholders() {
+    async checkLoginPagePlaceholders(): Promise<void> {
         const placeholderChecks = [
             {
                 element: this.usernameInput,
@@ -51,7 +51,7 @@ export class LoginPage {
         }
     }
 
-    async checkLoginPageLabels() {
+    async checkLoginPageLabels(): Promise<void> {
         const labelChecks = [
             {
                 forAttribute: 'Username',
