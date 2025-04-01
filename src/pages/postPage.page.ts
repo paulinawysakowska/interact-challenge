@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 
-import { postPageDict } from '../dicts/postPageDict';
+import { postPageDict } from '../dicts/postPage.dict';
 import { verifyUrl } from '../utils/assertions/verifyUrlContains.util';
 
 export class PostPage {

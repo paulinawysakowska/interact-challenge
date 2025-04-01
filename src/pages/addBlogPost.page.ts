@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 
-import { addBlogPostDict } from '../dicts/addBlogPostDict';
+import { addBlogPostDict } from '../dicts/addBlogPost.dict';
 import { checkPlaceholder } from '../utils/assertions/checkPlaceholder.util';
 import { checkTextFieldEmptyStatus } from '../utils/assertions/checkTextFieldEmptyStatus.util';
 import { verifyUrl } from '../utils/assertions/verifyUrlContains.util';
