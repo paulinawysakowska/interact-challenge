@@ -2,7 +2,7 @@
 // export * from './logs/addBlogPost.logs';
 
 export * from './page-copy/addBlogPost.copy';
-export * from './page-copy/homePage.dict';
+export * from './page-copy/homePage.copy';
 export * from './page-copy/loginPage.dict';
 export * from './page-copy/postPage.dict';
 export * from './page-copy/publishPostDrawer.dict';

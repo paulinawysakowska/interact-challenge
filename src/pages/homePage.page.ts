@@ -1,6 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 
-import { homePageDict } from '@dicts';
+import { homePageElements } from '@dicts/page-elements/homePage.elements';
+import { getHomePageLocators } from '@dicts/page-locators/homePage.locators';
 import { verifyUrl } from '@utils';
 
 export class HomePage {
@@ -10,18 +11,18 @@ export class HomePage {
     constructor(page: Page) {
         this.page = page;
 
-        const { elementNames } = homePageDict;
-
-        this.avatarButton = page.getByRole('button', {
-            name: elementNames.avatarButton,
-        });
+        const { avatarButton } = getHomePageLocators(page);
+        this.avatarButton = avatarButton;
     }
 
     async verifyHomeUrl(): Promise<void> {
-        await verifyUrl(this.page, homePageDict.urlTxt, true);
+        await verifyUrl(this.page, homePageElements.urlTxt, true);
     }
 
     async clickAvatarButton(): Promise<void> {
         await this.avatarButton.click();
     }
 }
+
+// add verify texts on the page
+//getByRole('link', { name: 'Interact logo' })
