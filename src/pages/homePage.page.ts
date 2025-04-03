@@ -9,8 +9,11 @@ export class HomePage {
 
     constructor(page: Page) {
         this.page = page;
+
+        const { elementNames } = homePageDict;
+
         this.avatarButton = page.getByRole('button', {
-            name: 'Your profile and settings QA',
+            name: elementNames.avatarButton,
         });
     }
 

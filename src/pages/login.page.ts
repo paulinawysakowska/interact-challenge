@@ -21,10 +21,15 @@ export class LoginPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.logoImage = page.getByRole('img', { name: 'logo' });
-        this.usernameInput = page.locator('#Username');
-        this.passwordInput = page.locator('#Password');
-        this.loginButton = page.locator('#loginbtn');
+
+        const { elementNames, selectors } = loginPageDict;
+
+        this.logoImage = page.getByRole('img', {
+            name: elementNames.logoImage,
+        });
+        this.usernameInput = page.locator(selectors.usernameInput);
+        this.passwordInput = page.locator(selectors.passwordInput);
+        this.loginButton = page.locator(selectors.loginButton);
     }
 
     async goToMainPage(): Promise<void> {
@@ -40,11 +45,11 @@ export class LoginPage {
         const placeholderChecks = [
             {
                 element: this.usernameInput,
-                expectedText: loginPageDict.usernamePlaceholderTxt,
+                expectedText: loginPageDict.placeholders.username,
             },
             {
                 element: this.passwordInput,
-                expectedText: loginPageDict.passwordPlaceholderTxt,
+                expectedText: loginPageDict.placeholders.password,
             },
         ];
 
@@ -56,11 +61,11 @@ export class LoginPage {
     async checkLoginPageLabels(): Promise<void> {
         const labelChecks = [
             {
-                forAttribute: 'Username',
+                forAttribute: loginPageDict.labelForAttributes.username,
                 expectedText: loginPageDict.labelsText.usernameLabel,
             },
             {
-                forAttribute: 'Password',
+                forAttribute: loginPageDict.labelForAttributes.password,
                 expectedText: loginPageDict.labelsText.passwordLabel,
             },
         ];
@@ -75,7 +80,7 @@ export class LoginPage {
     }
 
     async checkLoginButtonText(): Promise<void> {
-        const expectedText = loginPageDict.loginButtonTxt;
+        const expectedText = loginPageDict.loginButton;
         await checkTextContent(this.loginButton, expectedText);
     }
 

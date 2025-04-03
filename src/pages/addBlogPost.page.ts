@@ -1,6 +1,11 @@
 import { Page, Locator, expect } from '@playwright/test';
 
-import { addBlogPostDict } from '@dicts';
+import {
+    addBlogPostCopy,
+    addBlogPostElements,
+    getAddBlogPostLocators,
+} from '@dicts';
+import { addBlogPostLogs } from '@dicts/logs/addBlogPost.logs';
 import {
     checkIfElementNotVisible,
     checkIfElementVisible,
@@ -30,51 +35,62 @@ export class AddBlogPost {
 
     constructor(page: Page) {
         this.page = page;
-        this.avatarButton = page.locator('img[alt="QA Test"]');
-        this.upladImageButton = page.locator('input[name="qqfile"]');
-        this.imagePath = 'src/img/post-image.jpg';
-        this.removeBackgroundButton = page.locator(
-            'span[aria-label="Remove background image"]'
-        );
-        this.postTitleTextFiled = page.locator('h1[aria-label="Post title"]');
-        this.postSummaryTextFiled = page.locator(
-            'p[aria-label="Post Summary"]'
-        );
-        this.postContentTextFiled = page.getByRole('textbox', {
-            name: 'Rich Text Editor,',
-        });
-        this.continueButton = page.locator('a[aria-label="Continue"]');
-        this.postTitleErrorMsg = page.locator(
-            `text=${addBlogPostDict.postTitleErrorMsg}`
-        );
-        this.contentErrorMsg = page.locator(
-            `text=${addBlogPostDict.contentErrorMsg}`
-        );
+
+        const {
+            avatarButton,
+            upladImageButton,
+            removeBackgroundButton,
+            postTitleTextFiled,
+            postSummaryTextFiled,
+            postContentTextFiled,
+            continueButton,
+            postTitleErrorMsg,
+            contentErrorMsg,
+        } = getAddBlogPostLocators(page);
+
+        const { fieldNames } = addBlogPostElements;
+
+        this.avatarButton = avatarButton;
+        this.upladImageButton = upladImageButton;
+        this.removeBackgroundButton = removeBackgroundButton;
+        this.postTitleTextFiled = postTitleTextFiled;
+        this.postSummaryTextFiled = postSummaryTextFiled;
+        this.postContentTextFiled = postContentTextFiled;
+        this.continueButton = continueButton;
+        this.postTitleErrorMsg = postTitleErrorMsg;
+        this.contentErrorMsg = contentErrorMsg;
+        this.imagePath = addBlogPostElements.imagePath;
 
         this.fieldChecks = [
-            { element: this.postTitleTextFiled, fieldName: 'Title' },
-            { element: this.postSummaryTextFiled, fieldName: 'Summary' },
-            { element: this.postContentTextFiled, fieldName: 'Content' },
+            { element: this.postTitleTextFiled, fieldName: fieldNames.title },
+            {
+                element: this.postSummaryTextFiled,
+                fieldName: fieldNames.summary,
+            },
+            {
+                element: this.postContentTextFiled,
+                fieldName: fieldNames.content,
+            },
         ];
     }
 
     async verifyHomeUrl(): Promise<void> {
-        await verifyUrl(this.page, addBlogPostDict.urlTxt, true);
+        await verifyUrl(this.page, addBlogPostElements.urlTxt, true);
     }
 
     async checkAddBlogPostPagePlaceholders(): Promise<void> {
         const placeholderChecks = [
             {
                 element: this.postTitleTextFiled,
-                expectedText: addBlogPostDict.placeholders.postTitle,
+                expectedText: addBlogPostCopy.placeholders.postTitle,
             },
             {
                 element: this.postSummaryTextFiled,
-                expectedText: addBlogPostDict.placeholders.postSummary,
+                expectedText: addBlogPostCopy.placeholders.postSummary,
             },
             {
                 element: this.postContentTextFiled,
-                expectedText: addBlogPostDict.placeholders.postContent,
+                expectedText: addBlogPostCopy.placeholders.postContent,
             },
         ];
 
@@ -89,7 +105,7 @@ export class AddBlogPost {
             if (!isEmpty) {
                 const actualText = await check.element.textContent();
                 console.error(
-                    `Field "${check.fieldName}" is not empty. Current content: "${actualText?.trim()}"`
+                    addBlogPostLogs.fieldNotEmpty(check.fieldName, actualText)
                 );
             }
             expect(isEmpty).toBe(true);
@@ -101,7 +117,7 @@ export class AddBlogPost {
             const isEmpty = await checkTextFieldEmptyStatus(check.element);
             if (isEmpty) {
                 console.error(
-                    `Field "${check.fieldName}" is empty when it should not be.`
+                    addBlogPostLogs.fieldShouldNotBeEmpty(check.fieldName)
                 );
             }
             expect(isEmpty).toBe(false);
@@ -123,7 +139,9 @@ export class AddBlogPost {
     async fillTitleWithRandomText(): Promise<string> {
         const randomTitle = generateRandomText(this.titleWordCount);
         await this.postTitleTextFiled.type(randomTitle);
-        await this.postTitleTextFiled.press('Tab');
+        await this.postTitleTextFiled.press(
+            addBlogPostElements.keyboardButtons.tab
+        );
         return randomTitle;
     }
 
@@ -135,7 +153,9 @@ export class AddBlogPost {
     async fillContentWithRandomText(): Promise<string> {
         const randomContent = generateRandomText(this.contentWordCount);
         await this.postContentTextFiled.fill(randomContent);
-        await this.postContentTextFiled.press('Tab');
+        await this.postContentTextFiled.press(
+            addBlogPostElements.keyboardButtons.tab
+        );
         return randomContent;
     }
 
