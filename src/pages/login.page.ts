@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
 import * as dotenv from 'dotenv';
 
-import { loginPageDict } from '@dicts';
+import { loginPageCopy } from '@dicts';
 import {
     checkPlaceholder,
     checkHiddenLabelText,
