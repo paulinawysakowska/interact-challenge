@@ -1,6 +1,10 @@
 import { expect, Locator, Page } from '@playwright/test';
 
-import { publishPostDrawerDict } from '@dicts';
+import {
+    getPublishPostDrawerLocators,
+    publishPostDrawerCopy,
+    publishPostDrawerLogs,
+} from '@dicts';
 import { checkIfTextVisible, isSwitchButtonChecked } from '@utils';
 
 export class PublishPostDrawer {
@@ -10,17 +14,19 @@ export class PublishPostDrawer {
 
     constructor(page: Page) {
         this.page = page;
-        this.switchButton = page.getByRole('dialog').locator('label');
-        this.saveButton = page.getByRole('link', { name: 'Save' });
+        const { switchButton, saveButton } = getPublishPostDrawerLocators(page);
+
+        this.switchButton = switchButton;
+        this.saveButton = saveButton;
     }
 
     async verifyTextsAreVisible(): Promise<void> {
-        const textsToCheck = Object.values(publishPostDrawerDict);
+        const textsToCheck = Object.values(publishPostDrawerCopy);
 
         for (const text of textsToCheck) {
             const isVisible = await checkIfTextVisible(this.page, text);
             if (!isVisible) {
-                console.error(`Text "${text}" is not visible on the page.`);
+                console.error(publishPostDrawerLogs.textNotVisible(text));
             }
             expect(isVisible).toBe(true);
         }
@@ -29,9 +35,7 @@ export class PublishPostDrawer {
     async verifySwitchButtonIsUnchecked(): Promise<boolean> {
         const isChecked = await isSwitchButtonChecked(this.switchButton);
         if (isChecked) {
-            console.error(
-                'Switch button is checked, but it should be unchecked.'
-            );
+            console.error(publishPostDrawerLogs.switchShouldBeUnchecked);
         }
         return !isChecked;
     }
@@ -39,9 +43,7 @@ export class PublishPostDrawer {
     async verifySwitchButtonIsChecked(): Promise<boolean> {
         const isChecked = await isSwitchButtonChecked(this.switchButton);
         if (!isChecked) {
-            console.error(
-                'Switch button is unchecked, but it should be checked.'
-            );
+            console.error(publishPostDrawerLogs.switchShouldBeChecked);
         }
         return isChecked;
     }

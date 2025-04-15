@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
+  globalSetup: require.resolve('./global-setup'),
   testDir: './src/tests',
   timeout: 60000,
   expect: {

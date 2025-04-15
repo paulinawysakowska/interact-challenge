@@ -1,11 +1,15 @@
 import { Page, Locator, expect } from '@playwright/test';
 
 import {
+    addBlogPostFieldChecks,
+    addBlogPostPlaceholderChecks,
+} from '@assertion-data';
+import {
     addBlogPostCopy,
     addBlogPostElements,
+    addBlogPostLogs,
     getAddBlogPostLocators,
 } from '@dicts';
-import { addBlogPostLogs } from '@dicts/logs/addBlogPost.logs';
 import {
     checkIfElementNotVisible,
     checkIfElementVisible,
@@ -61,17 +65,12 @@ export class AddBlogPost {
         this.contentErrorMsg = contentErrorMsg;
         this.imagePath = addBlogPostElements.imagePath;
 
-        this.fieldChecks = [
-            { element: this.postTitleTextFiled, fieldName: fieldNames.title },
-            {
-                element: this.postSummaryTextFiled,
-                fieldName: fieldNames.summary,
-            },
-            {
-                element: this.postContentTextFiled,
-                fieldName: fieldNames.content,
-            },
-        ];
+        this.fieldChecks = addBlogPostFieldChecks.map(
+            ({ field, fieldNameKey }) => ({
+                element: this[field] as Locator,
+                fieldName: fieldNames[fieldNameKey],
+            })
+        );
     }
 
     async verifyHomeUrl(): Promise<void> {
@@ -79,23 +78,10 @@ export class AddBlogPost {
     }
 
     async checkAddBlogPostPagePlaceholders(): Promise<void> {
-        const placeholderChecks = [
-            {
-                element: this.postTitleTextFiled,
-                expectedText: addBlogPostCopy.placeholders.postTitle,
-            },
-            {
-                element: this.postSummaryTextFiled,
-                expectedText: addBlogPostCopy.placeholders.postSummary,
-            },
-            {
-                element: this.postContentTextFiled,
-                expectedText: addBlogPostCopy.placeholders.postContent,
-            },
-        ];
-
-        for (const check of placeholderChecks) {
-            await checkPlaceholder(check.element, check.expectedText);
+        for (const { field, expectedTextKey } of addBlogPostPlaceholderChecks) {
+            const element = this[field] as Locator;
+            const expectedText = addBlogPostCopy.placeholders[expectedTextKey];
+            await checkPlaceholder(element, expectedText);
         }
     }
 

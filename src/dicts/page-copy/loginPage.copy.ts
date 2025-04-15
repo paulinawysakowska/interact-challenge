@@ -1,23 +1,8 @@
 export const loginPageCopy = {
-    // elementNames: {
-    //     logoImage: 'logo',
-    // },
-
-    // selectors: {
-    //     usernameInput: '#Username',
-    //     passwordInput: '#Password',
-    //     loginButton: '#loginbtn',
-    // },
-
     placeholders: {
         username: 'username',
         password: 'password',
     },
-
-    // labelForAttributes: {
-    //     username: 'Username',
-    //     password: 'Password',
-    // },
 
     labelsText: {
         usernameLabel: 'Username',

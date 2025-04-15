@@ -1,34 +1,36 @@
 import { Page, Locator, expect } from '@playwright/test';
 
-import { postPageDict } from '@dicts';
+import { getPostPageLocators, postPageElements } from '@dicts';
 import { verifyUrl } from '@utils';
 
 export class PostPage {
     readonly page: Page;
     readonly postTitle: Locator;
     readonly postContent: Locator;
+    private readonly defaultTimeout = 50000;
 
     constructor(page: Page) {
         this.page = page;
-        this.postTitle = page.locator('h1');
-        this.postContent = page.locator(
-            'section.section.content.is-primary > p'
-        );
+
+        const { postTitle, postContent } = getPostPageLocators(page);
+
+        this.postTitle = postTitle;
+        this.postContent = postContent;
     }
 
     async verifyPostPageUrl(): Promise<void> {
-        await verifyUrl(this.page, postPageDict.urlTxt, false);
+        await verifyUrl(this.page, postPageElements.urlTxt, false);
     }
 
     async verifyPublishedPostTitle(randomTitle: string): Promise<void> {
         await expect(this.postTitle).toHaveText(randomTitle, {
-            timeout: 50000,
+            timeout: this.defaultTimeout,
         });
     }
 
     async verifyPublishedPostContent(randomContent: string): Promise<void> {
         await expect(this.postContent).toHaveText(randomContent, {
-            timeout: 50000,
+            timeout: this.defaultTimeout,
         });
     }
 }

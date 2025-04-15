@@ -1,5 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 
+import { getUserDrawerLocators } from '@dicts';
+
 export class UserDrawer {
     readonly page: Page;
     readonly logOffButton: Locator;
@@ -7,10 +9,11 @@ export class UserDrawer {
 
     constructor(page: Page) {
         this.page = page;
-        this.logOffButton = page.locator('span:text("Log Off")');
-        this.addBlogPostButton = page.locator(
-            'ul[aria-labelledby="profile-filter-heading"] li a[href="/blog/post/create/345"]'
-        );
+
+        const { logOffButton, addBlogPostButton } = getUserDrawerLocators(page);
+
+        this.logOffButton = logOffButton;
+        this.addBlogPostButton = addBlogPostButton;
     }
 
     async isLogOffButtonVisible(): Promise<boolean> {

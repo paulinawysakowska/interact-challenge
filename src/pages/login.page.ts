@@ -1,7 +1,10 @@
 import { Page, Locator, expect } from '@playwright/test';
-import * as dotenv from 'dotenv';
 
-import { loginPageCopy } from '@dicts';
+import {
+    loginPageLabelChecks,
+    loginPagePlaceholderChecks,
+} from '@assertion-data';
+import { getLoginPageLocators, loginPageCopy } from '@dicts';
 import {
     checkPlaceholder,
     checkHiddenLabelText,
@@ -9,8 +12,6 @@ import {
     enterText,
     checkFieldIsFilled,
 } from '@utils';
-
-dotenv.config();
 
 export class LoginPage {
     readonly page: Page;
@@ -22,14 +23,13 @@ export class LoginPage {
     constructor(page: Page) {
         this.page = page;
 
-        const { elementNames, selectors } = loginPageDict;
+        const { logoImage, usernameInput, passwordInput, loginButton } =
+            getLoginPageLocators(page);
 
-        this.logoImage = page.getByRole('img', {
-            name: elementNames.logoImage,
-        });
-        this.usernameInput = page.locator(selectors.usernameInput);
-        this.passwordInput = page.locator(selectors.passwordInput);
-        this.loginButton = page.locator(selectors.loginButton);
+        this.logoImage = logoImage;
+        this.usernameInput = usernameInput;
+        this.passwordInput = passwordInput;
+        this.loginButton = loginButton;
     }
 
     async goToMainPage(): Promise<void> {
@@ -42,16 +42,7 @@ export class LoginPage {
     }
 
     async checkLoginPagePlaceholders(): Promise<void> {
-        const placeholderChecks = [
-            {
-                element: this.usernameInput,
-                expectedText: loginPageDict.placeholders.username,
-            },
-            {
-                element: this.passwordInput,
-                expectedText: loginPageDict.placeholders.password,
-            },
-        ];
+        const placeholderChecks = loginPagePlaceholderChecks(this.page);
 
         for (const check of placeholderChecks) {
             await checkPlaceholder(check.element, check.expectedText);
@@ -59,18 +50,7 @@ export class LoginPage {
     }
 
     async checkLoginPageLabels(): Promise<void> {
-        const labelChecks = [
-            {
-                forAttribute: loginPageDict.labelForAttributes.username,
-                expectedText: loginPageDict.labelsText.usernameLabel,
-            },
-            {
-                forAttribute: loginPageDict.labelForAttributes.password,
-                expectedText: loginPageDict.labelsText.passwordLabel,
-            },
-        ];
-
-        for (const check of labelChecks) {
+        for (const check of loginPageLabelChecks) {
             await checkHiddenLabelText(
                 this.page,
                 check.forAttribute,
@@ -80,7 +60,7 @@ export class LoginPage {
     }
 
     async checkLoginButtonText(): Promise<void> {
-        const expectedText = loginPageDict.loginButton;
+        const expectedText = loginPageCopy.loginButton;
         await checkTextContent(this.loginButton, expectedText);
     }
 

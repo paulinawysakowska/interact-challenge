@@ -24,5 +24,5 @@ export class HomePage {
     }
 }
 
-// add verify texts on the page
+// TO DO: add verify texts on the page
 //getByRole('link', { name: 'Interact logo' })
