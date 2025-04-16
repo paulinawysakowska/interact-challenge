@@ -1,84 +1,60 @@
 import { Page, Locator, expect } from '@playwright/test';
 
-import { addBlogPostDict } from '../dicts/addBlogPostDict';
-import { checkIfElementNotVisible } from '../utils/checkIfElementNotVisible';
-import { checkIfElementVisible } from '../utils/checkIfElementVisible';
-import { checkPlaceholder } from '../utils/checkPlaceholder';
-import { checkTextFieldEmptyStatus } from '../utils/checkTextFieldEmptyStatus';
-import { generateRandomText } from '../utils/generateRandomText';
-import { uploadFile } from '../utils/uploadFile';
-import { verifyUrl } from '../utils/verifyUrlContains';
+import {
+    addBlogPostFieldChecks,
+    addBlogPostPlaceholderChecks,
+} from '@assertion-data';
+import {
+    addBlogPostCopy,
+    addBlogPostElements,
+    getAddBlogPostLocators,
+    validationLogs,
+} from '@dicts';
+import { AddBlogPostLocators } from '@types';
+import {
+    checkIfElementNotVisible,
+    checkIfElementVisible,
+    checkPlaceholder,
+    checkTextFieldEmptyStatus,
+    generateRandomText,
+    uploadFile,
+    verifyUrl,
+} from '@utils';
 
 export class AddBlogPost {
     readonly page: Page;
-    readonly avatarButton: Locator;
-    readonly upladImageButton: Locator;
+    readonly locators: AddBlogPostLocators;
+
     private readonly imagePath: string;
-    readonly removeBackgroundButton: Locator;
-    readonly uploadImagePlaceholder: Locator;
-    readonly postTitleTextFiled: Locator;
-    readonly postSummaryTextFiled: Locator;
-    readonly postContentTextFiled: Locator;
     private readonly titleWordCount: number = 5;
     private readonly summaryWordCount = 10;
     private readonly contentWordCount: number = 20;
     readonly fieldChecks: { element: Locator; fieldName: string }[];
-    readonly continueButton: Locator;
-    readonly postTitleErrorMsg: Locator;
-    readonly contentErrorMsg: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.avatarButton = page.locator('img[alt="QA Test"]');
-        this.upladImageButton = page.locator('input[name="qqfile"]');
-        this.imagePath = 'src/img/post-image.jpg';
-        this.removeBackgroundButton = page.locator(
-            'span[aria-label="Remove background image"]'
-        );
-        this.postTitleTextFiled = page.locator('h1[aria-label="Post title"]');
-        this.postSummaryTextFiled = page.locator(
-            'p[aria-label="Post Summary"]'
-        );
-        this.postContentTextFiled = page.getByRole('textbox', {
-            name: 'Rich Text Editor,',
-        });
-        this.continueButton = page.locator('a[aria-label="Continue"]');
-        this.postTitleErrorMsg = page.locator(
-            `text=${addBlogPostDict.postTitleErrorMsg}`
-        );
-        this.contentErrorMsg = page.locator(
-            `text=${addBlogPostDict.contentErrorMsg}`
-        );
+        this.locators = getAddBlogPostLocators(page);
+        this.imagePath = addBlogPostElements.imagePath;
 
-        this.fieldChecks = [
-            { element: this.postTitleTextFiled, fieldName: 'Title' },
-            { element: this.postSummaryTextFiled, fieldName: 'Summary' },
-            { element: this.postContentTextFiled, fieldName: 'Content' },
-        ];
+        const { fieldNames } = addBlogPostElements;
+
+        this.fieldChecks = addBlogPostFieldChecks.map(
+            ({ field, fieldNameKey }) => ({
+                element: this.locators[field] as Locator,
+                fieldName: fieldNames[fieldNameKey],
+            })
+        );
     }
 
     async verifyHomeUrl(): Promise<void> {
-        await verifyUrl(this.page, addBlogPostDict.urlTxt, true);
+        await verifyUrl(this.page, addBlogPostElements.urlTxt, true);
     }
 
     async checkAddBlogPostPagePlaceholders(): Promise<void> {
-        const placeholderChecks = [
-            {
-                element: this.postTitleTextFiled,
-                expectedText: addBlogPostDict.placeholders.postTitle,
-            },
-            {
-                element: this.postSummaryTextFiled,
-                expectedText: addBlogPostDict.placeholders.postSummary,
-            },
-            {
-                element: this.postContentTextFiled,
-                expectedText: addBlogPostDict.placeholders.postContent,
-            },
-        ];
-
-        for (const check of placeholderChecks) {
-            await checkPlaceholder(check.element, check.expectedText);
+        for (const { field, expectedTextKey } of addBlogPostPlaceholderChecks) {
+            const element = this.locators[field] as Locator;
+            const expectedText = addBlogPostCopy.placeholders[expectedTextKey];
+            await checkPlaceholder(element, expectedText);
         }
     }
 
@@ -88,7 +64,7 @@ export class AddBlogPost {
             if (!isEmpty) {
                 const actualText = await check.element.textContent();
                 console.error(
-                    `Field "${check.fieldName}" is not empty. Current content: "${actualText?.trim()}"`
+                    validationLogs.fieldNotEmpty(check.fieldName, actualText)
                 );
             }
             expect(isEmpty).toBe(true);
@@ -100,7 +76,7 @@ export class AddBlogPost {
             const isEmpty = await checkTextFieldEmptyStatus(check.element);
             if (isEmpty) {
                 console.error(
-                    `Field "${check.fieldName}" is empty when it should not be.`
+                    validationLogs.fieldShouldNotBeEmpty(check.fieldName)
                 );
             }
             expect(isEmpty).toBe(false);
@@ -108,37 +84,41 @@ export class AddBlogPost {
     }
 
     async uploadBlogImage(): Promise<void> {
-        await uploadFile(this.upladImageButton, this.imagePath);
+        await uploadFile(this.locators.uploadImageButton, this.imagePath);
     }
 
     async checkRemoveBackgroundButtonNotVisible(): Promise<void> {
-        await checkIfElementNotVisible(this.removeBackgroundButton);
+        await checkIfElementNotVisible(this.locators.removeBackgroundButton);
     }
 
     async checkRemoveBackgroundButtonVisible(): Promise<void> {
-        await checkIfElementVisible(this.removeBackgroundButton);
+        await checkIfElementVisible(this.locators.removeBackgroundButton);
     }
 
     async fillTitleWithRandomText(): Promise<string> {
         const randomTitle = generateRandomText(this.titleWordCount);
-        await this.postTitleTextFiled.type(randomTitle);
-        await this.postTitleTextFiled.press('Tab');
+        await this.locators.postTitleTextFiled.type(randomTitle);
+        await this.locators.postTitleTextFiled.press(
+            addBlogPostElements.keyboardButtons.tab
+        );
         return randomTitle;
     }
 
     async fillSummaryWithRandomText(): Promise<void> {
         const randomSummary = generateRandomText(this.summaryWordCount);
-        await this.postSummaryTextFiled.fill(randomSummary);
+        await this.locators.postSummaryTextFiled.fill(randomSummary);
     }
 
     async fillContentWithRandomText(): Promise<string> {
         const randomContent = generateRandomText(this.contentWordCount);
-        await this.postContentTextFiled.fill(randomContent);
-        await this.postContentTextFiled.press('Tab');
+        await this.locators.postContentTextFiled.fill(randomContent);
+        await this.locators.postContentTextFiled.press(
+            addBlogPostElements.keyboardButtons.tab
+        );
         return randomContent;
     }
 
     async selectContinueButton(): Promise<void> {
-        await this.continueButton.click();
+        await this.locators.continueButton.click();
     }
 }

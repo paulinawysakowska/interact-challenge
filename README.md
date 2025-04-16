@@ -1,5 +1,6 @@
 # Interact Challenge - Automated Testing Project
 
+
 ## Project Overview
 
 This project is an automated testing suite for a web application developed using Playwright and TypeScript. The project is designed to automate end-to-end tests for critical features of the application, focusing on user interactions like logging in, adding blog posts, and verifying the visibility and functionality of various UI elements. The tests are structured using the Page Object Model (POM) to promote maintainability and reusability of test code.
@@ -8,9 +9,13 @@ This project is an automated testing suite for a web application developed using
 
 - **Automated Test Suite**: Comprehensive end-to-end tests for the web application using Playwright and TypeScript.
 - **Page Object Model (POM)**: Implementation of POM for better test structure and maintenance.
+- **Typed Assertion Data**: Predefined placeholder/label checks separated from test logic.
 - **Custom Utility Functions**: Reusable utility functions for common tasks like checking visibility, handling errors, and filling forms.
 - **Error Handling**: Includes functions to handle known issues within the application by retrying certain actions or checking for specific error messages.
+- **Custom Logging**: Logs grouped by technical, interaction and validation messages.
+- **PageManager Pattern**: Centralized management of all page objects per test.
 - **ESLint and Prettier Integration**: Ensures consistent code quality and formatting across the project.
+- **Global Setup**: Auto-loads `.env` variables before test execution.
 
 ## Prerequisites
 

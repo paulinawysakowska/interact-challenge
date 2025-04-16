@@ -1,41 +1,26 @@
-import { test } from '@playwright/test';
-
-import { HomePage } from '../pages/homePage.page';
-import { LoginPage } from '../pages/login.page';
-import { attachScreenshot } from '../utils/attachScreenshot';
+import { pageManagerTest as test } from '@fixtures';
+import { attachScreenshot } from '@utils';
 
 const screenshotLabel = 'log-in-test';
 
-test.beforeEach(async ({ page }, testInfo) => {
-    const loginPage = new LoginPage(page);
+test.beforeEach(async ({ pages, page }, testInfo) => {
+    await pages.loginPage.goToMainPage();
 
-    await loginPage.goToMainPage();
     await attachScreenshot(testInfo, page, screenshotLabel);
 });
 
-test('Login user', async ({ page }, testInfo) => {
-    const loginPage = new LoginPage(page);
-    const homePage = new HomePage(page);
-
-    await loginPage.isLogoVisible();
-
-    await loginPage.checkLoginPageLabels();
-
-    await loginPage.checkLoginPagePlaceholders();
-
-    await loginPage.checkLoginButtonText();
-
-    await loginPage.enterUsername();
-
-    await loginPage.enterPassword();
+test('Login user', async ({ pages, page }, testInfo) => {
+    await pages.loginPage.isLogoVisible();
+    await pages.loginPage.checkLoginPageLabels();
+    await pages.loginPage.checkLoginPagePlaceholders();
+    await pages.loginPage.checkLoginButtonText();
+    await pages.loginPage.enterUsername();
+    await pages.loginPage.enterPassword();
 
     await attachScreenshot(testInfo, page, screenshotLabel);
 
-    await loginPage.checkFieldsAreFilled();
-
-    await loginPage.clickLoginButton();
-
-    await homePage.verifyHomeUrl();
-
-    await homePage.clickAvatarButton();
+    await pages.loginPage.checkFieldsAreFilled();
+    await pages.loginPage.clickLoginButton();
+    await pages.homePage.verifyHomeUrl();
+    await pages.homePage.clickAvatarButton();
 });

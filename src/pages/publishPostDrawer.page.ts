@@ -1,57 +1,60 @@
-import { expect, Locator, Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 
-import { publishPostDrawerDict } from '../dicts/publishPostDrawerDict';
-import { checkIfTextVisible } from '../utils/checkIfTextVisible';
-import { isSwitchButtonChecked } from '../utils/checkSwitchButton';
+import {
+    getPublishPostDrawerLocators,
+    interactionLogs,
+    publishPostDrawerCopy,
+    validationLogs,
+} from '@dicts';
+import { PublishPostDrawerLocators } from '@types';
+import { checkIfTextVisible, isSwitchButtonChecked } from '@utils';
 
 export class PublishPostDrawer {
     readonly page: Page;
-    readonly switchButton: Locator;
-    readonly saveButton: Locator;
+    readonly locators: PublishPostDrawerLocators;
 
     constructor(page: Page) {
         this.page = page;
-        this.switchButton = page.getByRole('dialog').locator('label');
-        this.saveButton = page.getByRole('link', { name: 'Save' });
+        this.locators = getPublishPostDrawerLocators(page);
     }
 
     async verifyTextsAreVisible(): Promise<void> {
-        const textsToCheck = Object.values(publishPostDrawerDict);
+        const textsToCheck = Object.values(publishPostDrawerCopy);
 
         for (const text of textsToCheck) {
             const isVisible = await checkIfTextVisible(this.page, text);
             if (!isVisible) {
-                console.error(`Text "${text}" is not visible on the page.`);
+                console.error(validationLogs.textNotVisible(text));
             }
             expect(isVisible).toBe(true);
         }
     }
 
     async verifySwitchButtonIsUnchecked(): Promise<boolean> {
-        const isChecked = await isSwitchButtonChecked(this.switchButton);
+        const isChecked = await isSwitchButtonChecked(
+            this.locators.switchButton
+        );
         if (isChecked) {
-            console.error(
-                'Switch button is checked, but it should be unchecked.'
-            );
+            console.error(interactionLogs.switchShouldBeUnchecked);
         }
         return !isChecked;
     }
 
     async verifySwitchButtonIsChecked(): Promise<boolean> {
-        const isChecked = await isSwitchButtonChecked(this.switchButton);
+        const isChecked = await isSwitchButtonChecked(
+            this.locators.switchButton
+        );
         if (!isChecked) {
-            console.error(
-                'Switch button is unchecked, but it should be checked.'
-            );
+            console.error(interactionLogs.switchShouldBeChecked);
         }
         return isChecked;
     }
 
     async clickSwitchButton(): Promise<void> {
-        await this.switchButton.click();
+        await this.locators.switchButton.click();
     }
 
     async clickSaveButton(): Promise<void> {
-        await this.saveButton.click();
+        await this.locators.saveButton.click();
     }
 }

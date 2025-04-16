@@ -1,24 +1,27 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
 
-import { homePageDict } from '../dicts/homePageDict';
-import { verifyUrl } from '../utils/verifyUrlContains';
+import { getHomePageLocators, homePageElements } from '@dicts';
+import { HomePageLocators } from '@types';
+import { verifyUrl } from '@utils';
 
 export class HomePage {
     readonly page: Page;
-    readonly avatarButton: Locator;
+    readonly locators: HomePageLocators;
 
     constructor(page: Page) {
         this.page = page;
-        this.avatarButton = page.getByRole('button', {
-            name: 'Your profile and settings QA',
-        });
+
+        this.locators = getHomePageLocators(page);
     }
 
     async verifyHomeUrl(): Promise<void> {
-        await verifyUrl(this.page, homePageDict.urlTxt, true);
+        await verifyUrl(this.page, homePageElements.urlTxt, true);
     }
 
     async clickAvatarButton(): Promise<void> {
-        await this.avatarButton.click();
+        await this.locators.avatarButton.click();
     }
 }
+
+// TO DO: add verify texts on the page
+//getByRole('link', { name: 'Interact logo' })
