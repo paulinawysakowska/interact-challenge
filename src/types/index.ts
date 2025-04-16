@@ -1,4 +1,6 @@
-export * from './assertion-data/addBlogPost.types';
+// assertion data
+export * from './assertion-data/add-blog-post/fieldChecks.types';
+export * from './assertion-data/add-blog-post/placeholders.types';
 
 // dicts
 export * from './dicts/logs/addBlogPost.types';
