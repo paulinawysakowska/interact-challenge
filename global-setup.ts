@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 
 export default async (): Promise<void> => {
-    dotenv.config();
+    config();
 };
