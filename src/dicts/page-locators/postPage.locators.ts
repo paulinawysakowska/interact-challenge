@@ -1,11 +1,8 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
 
-export const getPostPageLocators = (
-    page: Page
-): {
-    postTitle: Locator;
-    postContent: Locator;
-} => {
+import { PostPageLocators } from '@types';
+
+export const getPostPageLocators = (page: Page): PostPageLocators => {
     return {
         postTitle: page.locator('h1'),
         postContent: page.locator('section.section.content.is-primary > p'),

@@ -1,15 +1,9 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
 
-import { loginPageElements } from '@dicts/page-elements/loginPage.elements';
+import { loginPageElements } from '@dicts';
+import { LoginPageLocators } from '@types';
 
-export const getLoginPageLocators = (
-    page: Page
-): {
-    logoImage: Locator;
-    usernameInput: Locator;
-    passwordInput: Locator;
-    loginButton: Locator;
-} => {
+export const getLoginPageLocators = (page: Page): LoginPageLocators => {
     const { elementNames } = loginPageElements;
 
     return {

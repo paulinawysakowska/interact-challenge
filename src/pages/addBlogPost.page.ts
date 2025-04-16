@@ -10,6 +10,7 @@ import {
     addBlogPostLogs,
     getAddBlogPostLocators,
 } from '@dicts';
+import { AddBlogPostLocators } from '@types';
 import {
     checkIfElementNotVisible,
     checkIfElementVisible,
@@ -22,52 +23,24 @@ import {
 
 export class AddBlogPost {
     readonly page: Page;
-    readonly avatarButton: Locator;
-    readonly upladImageButton: Locator;
+    readonly locators: AddBlogPostLocators;
+
     private readonly imagePath: string;
-    readonly removeBackgroundButton: Locator;
-    readonly postTitleTextFiled: Locator;
-    readonly postSummaryTextFiled: Locator;
-    readonly postContentTextFiled: Locator;
     private readonly titleWordCount: number = 5;
     private readonly summaryWordCount = 10;
     private readonly contentWordCount: number = 20;
     readonly fieldChecks: { element: Locator; fieldName: string }[];
-    readonly continueButton: Locator;
-    readonly postTitleErrorMsg: Locator;
-    readonly contentErrorMsg: Locator;
 
     constructor(page: Page) {
         this.page = page;
-
-        const {
-            avatarButton,
-            upladImageButton,
-            removeBackgroundButton,
-            postTitleTextFiled,
-            postSummaryTextFiled,
-            postContentTextFiled,
-            continueButton,
-            postTitleErrorMsg,
-            contentErrorMsg,
-        } = getAddBlogPostLocators(page);
+        this.locators = getAddBlogPostLocators(page);
+        this.imagePath = addBlogPostElements.imagePath;
 
         const { fieldNames } = addBlogPostElements;
 
-        this.avatarButton = avatarButton;
-        this.upladImageButton = upladImageButton;
-        this.removeBackgroundButton = removeBackgroundButton;
-        this.postTitleTextFiled = postTitleTextFiled;
-        this.postSummaryTextFiled = postSummaryTextFiled;
-        this.postContentTextFiled = postContentTextFiled;
-        this.continueButton = continueButton;
-        this.postTitleErrorMsg = postTitleErrorMsg;
-        this.contentErrorMsg = contentErrorMsg;
-        this.imagePath = addBlogPostElements.imagePath;
-
         this.fieldChecks = addBlogPostFieldChecks.map(
             ({ field, fieldNameKey }) => ({
-                element: this[field] as Locator,
+                element: this.locators[field] as Locator,
                 fieldName: fieldNames[fieldNameKey],
             })
         );
@@ -79,7 +52,7 @@ export class AddBlogPost {
 
     async checkAddBlogPostPagePlaceholders(): Promise<void> {
         for (const { field, expectedTextKey } of addBlogPostPlaceholderChecks) {
-            const element = this[field] as Locator;
+            const element = this.locators[field] as Locator;
             const expectedText = addBlogPostCopy.placeholders[expectedTextKey];
             await checkPlaceholder(element, expectedText);
         }
@@ -111,21 +84,21 @@ export class AddBlogPost {
     }
 
     async uploadBlogImage(): Promise<void> {
-        await uploadFile(this.upladImageButton, this.imagePath);
+        await uploadFile(this.locators.uploadImageButton, this.imagePath);
     }
 
     async checkRemoveBackgroundButtonNotVisible(): Promise<void> {
-        await checkIfElementNotVisible(this.removeBackgroundButton);
+        await checkIfElementNotVisible(this.locators.removeBackgroundButton);
     }
 
     async checkRemoveBackgroundButtonVisible(): Promise<void> {
-        await checkIfElementVisible(this.removeBackgroundButton);
+        await checkIfElementVisible(this.locators.removeBackgroundButton);
     }
 
     async fillTitleWithRandomText(): Promise<string> {
         const randomTitle = generateRandomText(this.titleWordCount);
-        await this.postTitleTextFiled.type(randomTitle);
-        await this.postTitleTextFiled.press(
+        await this.locators.postTitleTextFiled.type(randomTitle);
+        await this.locators.postTitleTextFiled.press(
             addBlogPostElements.keyboardButtons.tab
         );
         return randomTitle;
@@ -133,19 +106,19 @@ export class AddBlogPost {
 
     async fillSummaryWithRandomText(): Promise<void> {
         const randomSummary = generateRandomText(this.summaryWordCount);
-        await this.postSummaryTextFiled.fill(randomSummary);
+        await this.locators.postSummaryTextFiled.fill(randomSummary);
     }
 
     async fillContentWithRandomText(): Promise<string> {
         const randomContent = generateRandomText(this.contentWordCount);
-        await this.postContentTextFiled.fill(randomContent);
-        await this.postContentTextFiled.press(
+        await this.locators.postContentTextFiled.fill(randomContent);
+        await this.locators.postContentTextFiled.press(
             addBlogPostElements.keyboardButtons.tab
         );
         return randomContent;
     }
 
     async selectContinueButton(): Promise<void> {
-        await this.continueButton.click();
+        await this.locators.continueButton.click();
     }
 }

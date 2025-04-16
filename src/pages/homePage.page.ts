@@ -1,18 +1,17 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
 
-import { homePageElements } from '@dicts/page-elements/homePage.elements';
-import { getHomePageLocators } from '@dicts/page-locators/homePage.locators';
+import { getHomePageLocators, homePageElements } from '@dicts';
+import { HomePageLocators } from '@types';
 import { verifyUrl } from '@utils';
 
 export class HomePage {
     readonly page: Page;
-    readonly avatarButton: Locator;
+    readonly locators: HomePageLocators;
 
     constructor(page: Page) {
         this.page = page;
 
-        const { avatarButton } = getHomePageLocators(page);
-        this.avatarButton = avatarButton;
+        this.locators = getHomePageLocators(page);
     }
 
     async verifyHomeUrl(): Promise<void> {
@@ -20,7 +19,7 @@ export class HomePage {
     }
 
     async clickAvatarButton(): Promise<void> {
-        await this.avatarButton.click();
+        await this.locators.avatarButton.click();
     }
 }
 

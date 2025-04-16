@@ -1,13 +1,9 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 import { userDrawerElements } from '@dicts';
+import { UserDrawerLocators } from '@types';
 
-export const getUserDrawerLocators = (
-    page: Page
-): {
-    logOffButton: Locator;
-    addBlogPostButton: Locator;
-} => {
+export const getUserDrawerLocators = (page: Page): UserDrawerLocators => {
     return {
         logOffButton: page.locator(
             `span:text("${userDrawerElements.buttonText.logOff}")`

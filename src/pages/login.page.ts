@@ -1,10 +1,11 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
 import {
     loginPageLabelChecks,
     loginPagePlaceholderChecks,
 } from '@assertion-data';
 import { getLoginPageLocators, loginPageCopy } from '@dicts';
+import { LoginPageLocators } from '@types';
 import {
     checkPlaceholder,
     checkHiddenLabelText,
@@ -15,21 +16,11 @@ import {
 
 export class LoginPage {
     readonly page: Page;
-    readonly logoImage: Locator;
-    readonly usernameInput: Locator;
-    readonly passwordInput: Locator;
-    readonly loginButton: Locator;
+    readonly locators: LoginPageLocators;
 
     constructor(page: Page) {
         this.page = page;
-
-        const { logoImage, usernameInput, passwordInput, loginButton } =
-            getLoginPageLocators(page);
-
-        this.logoImage = logoImage;
-        this.usernameInput = usernameInput;
-        this.passwordInput = passwordInput;
-        this.loginButton = loginButton;
+        this.locators = getLoginPageLocators(page);
     }
 
     async goToMainPage(): Promise<void> {
@@ -37,7 +28,7 @@ export class LoginPage {
     }
 
     async isLogoVisible(): Promise<void> {
-        const isVisible = await this.logoImage.isVisible();
+        const isVisible = await this.locators.logoImage.isVisible();
         expect(isVisible).toBe(true);
     }
 
@@ -61,21 +52,24 @@ export class LoginPage {
 
     async checkLoginButtonText(): Promise<void> {
         const expectedText = loginPageCopy.loginButton;
-        await checkTextContent(this.loginButton, expectedText);
+        await checkTextContent(this.locators.loginButton, expectedText);
     }
 
     async enterUsername(): Promise<void> {
         const username = process.env.LOGIN;
-        await enterText(this.usernameInput, username);
+        await enterText(this.locators.usernameInput, username);
     }
 
     async enterPassword(): Promise<void> {
         const password = process.env.PASSWORD;
-        await enterText(this.passwordInput, password);
+        await enterText(this.locators.passwordInput, password);
     }
 
     async checkFieldsAreFilled(): Promise<void> {
-        const fieldsToCheck = [this.usernameInput, this.passwordInput];
+        const fieldsToCheck = [
+            this.locators.usernameInput,
+            this.locators.passwordInput,
+        ];
 
         for (const field of fieldsToCheck) {
             const isFilled = await checkFieldIsFilled(field);
@@ -84,6 +78,6 @@ export class LoginPage {
     }
 
     async clickLoginButton(): Promise<void> {
-        await this.loginButton.click();
+        await this.locators.loginButton.click();
     }
 }

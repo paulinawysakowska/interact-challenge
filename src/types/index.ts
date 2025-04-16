@@ -1,2 +1,17 @@
-export * from './addBlogPost.types';
-export * from './fixtures.types';
+export * from './assertion-data/addBlogPost.types';
+
+// dicts
+export * from './dicts/logs/addBlogPost.types';
+export * from './dicts/logs/publishPostDrawer.types';
+
+// fixtures
+export * from './fixtures/loginUser.types';
+export * from './fixtures/pageManager.types';
+
+// paage locators
+export * from './page-locators/addBlogPost.types';
+export * from './page-locators/homePage.types';
+export * from './page-locators/loginPage.types';
+export * from './page-locators/postPage.types';
+export * from './page-locators/publishPostDrawer.types';
+export * from './page-locators/userDrawer.types';

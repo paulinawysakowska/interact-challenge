@@ -1,2 +1,2 @@
-export { loginTest } from './login.fixture';
+export { loginTest } from './loginUser.fixture';
 export { pageManagerTest } from './pageManager.fixture';

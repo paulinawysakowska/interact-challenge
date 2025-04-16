@@ -1,11 +1,10 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
+
+import { PublishPostDrawerLocators } from '@types';
 
 export const getPublishPostDrawerLocators = (
     page: Page
-): {
-    switchButton: Locator;
-    saveButton: Locator;
-} => {
+): PublishPostDrawerLocators => {
     return {
         switchButton: page.getByRole('dialog').locator('label'),
         saveButton: page.getByRole('link', { name: 'Save' }),

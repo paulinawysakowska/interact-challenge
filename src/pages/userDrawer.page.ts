@@ -1,26 +1,23 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 import { getUserDrawerLocators } from '@dicts';
+import { UserDrawerLocators } from '@types';
 
 export class UserDrawer {
     readonly page: Page;
-    readonly logOffButton: Locator;
-    readonly addBlogPostButton: Locator;
+    readonly locators: UserDrawerLocators;
 
     constructor(page: Page) {
         this.page = page;
 
-        const { logOffButton, addBlogPostButton } = getUserDrawerLocators(page);
-
-        this.logOffButton = logOffButton;
-        this.addBlogPostButton = addBlogPostButton;
+        this.locators = getUserDrawerLocators(page);
     }
 
     async isLogOffButtonVisible(): Promise<boolean> {
-        return await this.logOffButton.isVisible();
+        return await this.locators.logOffButton.isVisible();
     }
 
     async clickAddBlogPostButton(): Promise<void> {
-        await this.addBlogPostButton.click();
+        await this.locators.addBlogPostButton.click();
     }
 }

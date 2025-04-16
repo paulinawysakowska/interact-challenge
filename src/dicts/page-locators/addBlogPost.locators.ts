@@ -1,27 +1,16 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 import { addBlogPostCopy, addBlogPostElements } from '@dicts';
+import { AddBlogPostLocators } from '@types';
 
-export const getAddBlogPostLocators = (
-    page: Page
-): {
-    avatarButton: Locator;
-    upladImageButton: Locator;
-    removeBackgroundButton: Locator;
-    postTitleTextFiled: Locator;
-    postSummaryTextFiled: Locator;
-    postContentTextFiled: Locator;
-    continueButton: Locator;
-    postTitleErrorMsg: Locator;
-    contentErrorMsg: Locator;
-} => {
+export const getAddBlogPostLocators = (page: Page): AddBlogPostLocators => {
     const { altTexts, ariaLabels, inputNames, elementNames } =
         addBlogPostElements;
     const { errors } = addBlogPostCopy;
 
     return {
         avatarButton: page.locator(`img[alt="${altTexts.qaTest}"]`),
-        upladImageButton: page.locator(
+        uploadImageButton: page.locator(
             `input[name="${inputNames.uploadImage}"]`
         ),
         removeBackgroundButton: page.locator(

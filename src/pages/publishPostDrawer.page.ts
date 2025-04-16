@@ -1,23 +1,20 @@
-import { expect, Locator, Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 
 import {
     getPublishPostDrawerLocators,
     publishPostDrawerCopy,
     publishPostDrawerLogs,
 } from '@dicts';
+import { PublishPostDrawerLocators } from '@types';
 import { checkIfTextVisible, isSwitchButtonChecked } from '@utils';
 
 export class PublishPostDrawer {
     readonly page: Page;
-    readonly switchButton: Locator;
-    readonly saveButton: Locator;
+    readonly locators: PublishPostDrawerLocators;
 
     constructor(page: Page) {
         this.page = page;
-        const { switchButton, saveButton } = getPublishPostDrawerLocators(page);
-
-        this.switchButton = switchButton;
-        this.saveButton = saveButton;
+        this.locators = getPublishPostDrawerLocators(page);
     }
 
     async verifyTextsAreVisible(): Promise<void> {
@@ -33,7 +30,9 @@ export class PublishPostDrawer {
     }
 
     async verifySwitchButtonIsUnchecked(): Promise<boolean> {
-        const isChecked = await isSwitchButtonChecked(this.switchButton);
+        const isChecked = await isSwitchButtonChecked(
+            this.locators.switchButton
+        );
         if (isChecked) {
             console.error(publishPostDrawerLogs.switchShouldBeUnchecked);
         }
@@ -41,7 +40,9 @@ export class PublishPostDrawer {
     }
 
     async verifySwitchButtonIsChecked(): Promise<boolean> {
-        const isChecked = await isSwitchButtonChecked(this.switchButton);
+        const isChecked = await isSwitchButtonChecked(
+            this.locators.switchButton
+        );
         if (!isChecked) {
             console.error(publishPostDrawerLogs.switchShouldBeChecked);
         }
@@ -49,10 +50,10 @@ export class PublishPostDrawer {
     }
 
     async clickSwitchButton(): Promise<void> {
-        await this.switchButton.click();
+        await this.locators.switchButton.click();
     }
 
     async clickSaveButton(): Promise<void> {
-        await this.saveButton.click();
+        await this.locators.saveButton.click();
     }
 }

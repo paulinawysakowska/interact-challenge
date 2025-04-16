@@ -3,7 +3,7 @@ import { TestInfo } from '@playwright/test';
 import { LoginFixtures } from '@types';
 import { attachScreenshot, PageManager } from '@utils';
 
-import { pageManagerTest as base } from './pageManager.fixture'; // bazujemy na rozszerzonym test
+import { pageManagerTest as base } from './pageManager.fixture';
 
 const screenshotLabel = 'log-in-fixture';
 
