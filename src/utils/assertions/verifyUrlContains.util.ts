@@ -1,5 +1,17 @@
 import { Page, expect } from '@playwright/test';
 
+/**
+ * Verifies that the current page URL matches (or does not match) the expected pattern.
+ *
+ * Retries the check up to `retries` times with a 1-second delay between attempts.
+ *
+ * @param page - The Playwright Page object
+ * @param urlPart - The string or pattern expected to be present in the URL
+ * @param shouldContain - Whether the URL should contain the pattern (default: true)
+ * @param timeout - Timeout for each individual URL check (in ms, default: 3000)
+ * @param retries - Number of retries before throwing an error (default: 10)
+ */
+
 export async function verifyUrl(
     page: Page,
     urlPart: string,
