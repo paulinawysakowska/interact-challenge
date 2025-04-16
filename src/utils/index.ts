@@ -9,6 +9,7 @@ export * from './files/uploadFile.util';
 
 export * from './helpers/generateRandomText.util';
 export * from './helpers/handleError.util';
+export * from './helpers/pages.manager';
 
 export * from './input/enterText.util';
 

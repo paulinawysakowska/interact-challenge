@@ -1,11 +1,4 @@
-import { test } from '@fixtures';
-import {
-    AddBlogPost,
-    HomePage,
-    PostPage,
-    PublishPostDrawer,
-    UserDrawer,
-} from '@pages';
+import { loginTest as test } from '@fixtures';
 import {
     attachScreenshot,
     handleErrorsAndCompleteBlogPostSubmission,
@@ -17,72 +10,65 @@ test.beforeEach(async ({ loginAsUser }) => {
     await loginAsUser();
 });
 
-test('Add Blog Post', async ({ page }, testInfo) => {
-    const homePage = new HomePage(page);
-    const userDrawer = new UserDrawer(page);
-    const addBlogPost = new AddBlogPost(page);
-    const publishPostDrawer = new PublishPostDrawer(page);
-    const postPage = new PostPage(page);
+test('Add Blog Post', async ({ pages }, testInfo) => {
+    await attachScreenshot(testInfo, pages.rawPage, screenshotLabel);
 
-    await attachScreenshot(testInfo, page, screenshotLabel);
+    await pages.homePage.clickAvatarButton();
 
-    await homePage.clickAvatarButton();
+    await pages.userDrawer.isLogOffButtonVisible();
+    await pages.userDrawer.clickAddBlogPostButton();
 
-    await userDrawer.isLogOffButtonVisible();
-    await userDrawer.clickAddBlogPostButton();
+    await attachScreenshot(testInfo, pages.rawPage, screenshotLabel);
 
-    await attachScreenshot(testInfo, page, screenshotLabel);
+    await pages.addBlogPost.verifyHomeUrl();
+    await pages.addBlogPost.checkAddBlogPostPagePlaceholders();
+    await pages.addBlogPost.checkIfFieldsAreEmpty();
+    await pages.addBlogPost.checkRemoveBackgroundButtonNotVisible();
+    await pages.addBlogPost.uploadBlogImage();
+    await pages.addBlogPost.checkRemoveBackgroundButtonVisible();
 
-    await addBlogPost.verifyHomeUrl();
-    await addBlogPost.checkAddBlogPostPagePlaceholders();
-    await addBlogPost.checkIfFieldsAreEmpty();
-    await addBlogPost.checkRemoveBackgroundButtonNotVisible();
-    await addBlogPost.uploadBlogImage();
-    await addBlogPost.checkRemoveBackgroundButtonVisible();
-
-    const randomTitle = await addBlogPost.fillTitleWithRandomText();
+    const randomTitle = await pages.addBlogPost.fillTitleWithRandomText();
     // TO DO: Uncomment the line below when the bug is fixed
     // const randomContent = await addBlogPost.fillContentWithRandomText();
 
-    await attachScreenshot(testInfo, page, screenshotLabel);
+    await attachScreenshot(testInfo, pages.rawPage, screenshotLabel);
 
-    await addBlogPost.fillSummaryWithRandomText();
+    await pages.addBlogPost.fillSummaryWithRandomText();
 
-    await attachScreenshot(testInfo, page, screenshotLabel);
+    await attachScreenshot(testInfo, pages.rawPage, screenshotLabel);
 
-    await addBlogPost.fillContentWithRandomText();
+    await pages.addBlogPost.fillContentWithRandomText();
 
-    await attachScreenshot(testInfo, page, screenshotLabel);
+    await attachScreenshot(testInfo, pages.rawPage, screenshotLabel);
 
-    await addBlogPost.checkIfFieldsAreNotEmpty();
-    await addBlogPost.selectContinueButton();
+    await pages.addBlogPost.checkIfFieldsAreNotEmpty();
+    await pages.addBlogPost.selectContinueButton();
 
-    await attachScreenshot(testInfo, page, screenshotLabel);
+    await attachScreenshot(testInfo, pages.rawPage, screenshotLabel);
 
-    await publishPostDrawer.verifyTextsAreVisible();
-    await publishPostDrawer.verifySwitchButtonIsUnchecked();
+    await pages.publishPostDrawer.verifyTextsAreVisible();
+    await pages.publishPostDrawer.verifySwitchButtonIsUnchecked();
+    await pages.publishPostDrawer.clickSwitchButton();
 
-    await publishPostDrawer.clickSwitchButton();
+    await attachScreenshot(testInfo, pages.rawPage, screenshotLabel);
 
-    await attachScreenshot(testInfo, page, screenshotLabel);
+    await pages.publishPostDrawer.verifySwitchButtonIsChecked();
+    await pages.publishPostDrawer.clickSaveButton();
 
-    await publishPostDrawer.verifySwitchButtonIsChecked();
-    await publishPostDrawer.clickSaveButton();
-
-    await attachScreenshot(testInfo, page, screenshotLabel);
+    await attachScreenshot(testInfo, pages.rawPage, screenshotLabel);
 
     // Step below can be removed when the bug is fixed
     await handleErrorsAndCompleteBlogPostSubmission(
-        addBlogPost,
-        publishPostDrawer
+        pages.addBlogPost,
+        pages.publishPostDrawer
     );
 
-    await postPage.verifyPostPageUrl();
-    await postPage.verifyPublishedPostTitle(randomTitle);
+    await pages.postPage.verifyPostPageUrl();
+    await pages.postPage.verifyPublishedPostTitle(randomTitle);
     // TO DO: Uncomment the line below when the bug is fixed
     // await postPage.verifyPublishedPostContent(randomContent);
 
-    await attachScreenshot(testInfo, page, screenshotLabel);
+    await attachScreenshot(testInfo, pages.rawPage, screenshotLabel);
 });
 
 /*
