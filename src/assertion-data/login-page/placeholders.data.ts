@@ -1,6 +1,6 @@
 import { Locator, Page } from 'playwright/test';
 
-import { getLoginPageLocators, loginPageCopy } from '@dicts';
+import { getLoginPageLocators, loginPageTexts } from '@dicts';
 
 export const loginPagePlaceholderChecks = (
     page: Page
@@ -10,11 +10,11 @@ export const loginPagePlaceholderChecks = (
     return [
         {
             element: usernameInput,
-            expectedText: loginPageCopy.placeholders.username,
+            expectedText: loginPageTexts.placeholders.username,
         },
         {
             element: passwordInput,
-            expectedText: loginPageCopy.placeholders.password,
+            expectedText: loginPageTexts.placeholders.password,
         },
     ];
 };

@@ -1,12 +1,12 @@
-import { loginPageCopy, loginPageElements } from '@dicts';
+import { loginPageElements, loginPageTexts } from '@dicts';
 
 export const loginPageLabelChecks = [
     {
         forAttribute: loginPageElements.labelForAttributes.username,
-        expectedText: loginPageCopy.labelsText.usernameLabel,
+        expectedText: loginPageTexts.labelsText.usernameLabel,
     },
     {
         forAttribute: loginPageElements.labelForAttributes.password,
-        expectedText: loginPageCopy.labelsText.passwordLabel,
+        expectedText: loginPageTexts.labelsText.passwordLabel,
     },
 ];

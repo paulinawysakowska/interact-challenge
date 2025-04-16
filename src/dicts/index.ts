@@ -3,11 +3,11 @@ export * from './logs/interaction.logs';
 export * from './logs/technical.logs';
 export * from './logs/validation.logs';
 
-// Page copy
-export * from './page-copy/addBlogPost.copy';
-export * from './page-copy/homePage.copy';
-export * from './page-copy/loginPage.copy';
-export * from './page-copy/publishPostDrawer.copy';
+// Page texts
+export * from './page-texts/addBlogPost.texts';
+export * from './page-texts/homePage.texts';
+export * from './page-texts/loginPage.texts';
+export * from './page-texts/publishPostDrawer.texts';
 
 // Page elements
 export * from './page-elements/addBlogPost.elements';

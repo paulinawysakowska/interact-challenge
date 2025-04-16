@@ -3,7 +3,7 @@ import { expect, Page } from '@playwright/test';
 import {
     getPublishPostDrawerLocators,
     interactionLogs,
-    publishPostDrawerCopy,
+    publishPostDrawerTexts,
     validationLogs,
 } from '@dicts';
 import { PublishPostDrawerLocators } from '@types';
@@ -19,7 +19,7 @@ export class PublishPostDrawer {
     }
 
     async verifyTextsAreVisible(): Promise<void> {
-        const textsToCheck = Object.values(publishPostDrawerCopy);
+        const textsToCheck = Object.values(publishPostDrawerTexts);
 
         for (const text of textsToCheck) {
             const isVisible = await checkIfTextVisible(this.page, text);

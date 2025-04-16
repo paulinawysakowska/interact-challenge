@@ -5,8 +5,8 @@ import {
     addBlogPostPlaceholderChecks,
 } from '@assertion-data';
 import {
-    addBlogPostCopy,
     addBlogPostElements,
+    addBlogPostTexts,
     getAddBlogPostLocators,
     validationLogs,
 } from '@dicts';
@@ -53,7 +53,7 @@ export class AddBlogPost {
     async checkAddBlogPostPagePlaceholders(): Promise<void> {
         for (const { field, expectedTextKey } of addBlogPostPlaceholderChecks) {
             const element = this.locators[field] as Locator;
-            const expectedText = addBlogPostCopy.placeholders[expectedTextKey];
+            const expectedText = addBlogPostTexts.placeholders[expectedTextKey];
             await checkPlaceholder(element, expectedText);
         }
     }

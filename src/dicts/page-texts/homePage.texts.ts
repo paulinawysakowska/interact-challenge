@@ -1,4 +1,4 @@
-export const homePageCopy = {
+export const homePageTexts = {
     urlTxt: '#home',
 
     placeholders: {

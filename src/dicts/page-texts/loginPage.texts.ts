@@ -1,4 +1,4 @@
-export const loginPageCopy = {
+export const loginPageTexts = {
     placeholders: {
         username: 'username',
         password: 'password',

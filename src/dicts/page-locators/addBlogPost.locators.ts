@@ -1,12 +1,12 @@
 import { Page } from '@playwright/test';
 
-import { addBlogPostCopy, addBlogPostElements } from '@dicts';
+import { addBlogPostElements, addBlogPostTexts } from '@dicts';
 import { AddBlogPostLocators } from '@types';
 
 export const getAddBlogPostLocators = (page: Page): AddBlogPostLocators => {
     const { altTexts, ariaLabels, inputNames, elementNames } =
         addBlogPostElements;
-    const { errors } = addBlogPostCopy;
+    const { errors } = addBlogPostTexts;
 
     return {
         avatarButton: page.locator(`img[alt="${altTexts.qaTest}"]`),
