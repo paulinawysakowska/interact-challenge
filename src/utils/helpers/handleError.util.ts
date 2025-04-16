@@ -1,20 +1,22 @@
-import { AddBlogPost } from '../../pages/addBlogPost.page';
-import { PublishPostDrawer } from '../../pages/publishPostDrawer.page';
+import { interactionLogs } from '@dicts';
+import { AddBlogPost, PublishPostDrawer } from '@pages';
 
 export async function handleErrorsAndCompleteBlogPostSubmission(
     addBlogPost: AddBlogPost,
     publishPostDrawer: PublishPostDrawer
 ): Promise<void> {
-    const isTitleErrorVisible = await addBlogPost.postTitleErrorMsg.isVisible();
-    const isContentErrorVisible = await addBlogPost.contentErrorMsg.isVisible();
+    const isTitleErrorVisible =
+        await addBlogPost.locators.postTitleErrorMsg.isVisible();
+    const isContentErrorVisible =
+        await addBlogPost.locators.contentErrorMsg.isVisible();
 
     if (isTitleErrorVisible) {
-        console.warn('Title error is visible. Refilling title...');
+        console.warn(interactionLogs.refillingField('Title'));
         await addBlogPost.fillTitleWithRandomText();
     }
 
     if (isContentErrorVisible) {
-        console.warn('Content error is visible. Refilling content...');
+        console.warn(interactionLogs.refillingField('Content'));
         await addBlogPost.fillContentWithRandomText();
     }
 

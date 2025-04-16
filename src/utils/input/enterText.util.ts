@@ -1,13 +1,16 @@
 import { Locator } from '@playwright/test';
 
+import { technicalLogs } from '@dicts';
+
 export async function enterText(
     locator: Locator,
     text: string | undefined
 ): Promise<void> {
     if (!text) {
-        console.error('No text provided for input');
+        console.error(technicalLogs.missingInputText);
+
         return;
     }
 
-    await locator.type(text);
+    await locator.fill(text);
 }

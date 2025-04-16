@@ -2,8 +2,9 @@ import { expect, Page } from '@playwright/test';
 
 import {
     getPublishPostDrawerLocators,
+    interactionLogs,
     publishPostDrawerCopy,
-    publishPostDrawerLogs,
+    validationLogs,
 } from '@dicts';
 import { PublishPostDrawerLocators } from '@types';
 import { checkIfTextVisible, isSwitchButtonChecked } from '@utils';
@@ -23,7 +24,7 @@ export class PublishPostDrawer {
         for (const text of textsToCheck) {
             const isVisible = await checkIfTextVisible(this.page, text);
             if (!isVisible) {
-                console.error(publishPostDrawerLogs.textNotVisible(text));
+                console.error(validationLogs.textNotVisible(text));
             }
             expect(isVisible).toBe(true);
         }
@@ -34,7 +35,7 @@ export class PublishPostDrawer {
             this.locators.switchButton
         );
         if (isChecked) {
-            console.error(publishPostDrawerLogs.switchShouldBeUnchecked);
+            console.error(interactionLogs.switchShouldBeUnchecked);
         }
         return !isChecked;
     }
@@ -44,7 +45,7 @@ export class PublishPostDrawer {
             this.locators.switchButton
         );
         if (!isChecked) {
-            console.error(publishPostDrawerLogs.switchShouldBeChecked);
+            console.error(interactionLogs.switchShouldBeChecked);
         }
         return isChecked;
     }

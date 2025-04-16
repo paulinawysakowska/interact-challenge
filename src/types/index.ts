@@ -5,6 +5,9 @@ export * from './assertion-data/add-blog-post/placeholders.types';
 // dicts
 export * from './dicts/logs/addBlogPost.types';
 export * from './dicts/logs/publishPostDrawer.types';
+export * from './dicts/logs/interaction.types';
+export * from './dicts/logs/technical.types';
+export * from './dicts/logs/validation.types';
 
 // fixtures
 export * from './fixtures/loginUser.types';

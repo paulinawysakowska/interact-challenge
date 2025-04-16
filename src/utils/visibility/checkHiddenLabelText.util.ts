@@ -1,5 +1,7 @@
 import { Page, expect } from '@playwright/test';
 
+import { technicalLogs } from '@dicts';
+
 export async function checkHiddenLabelText(
     page: Page,
     forAttribute: string,
@@ -7,11 +9,15 @@ export async function checkHiddenLabelText(
 ): Promise<void> {
     const locator = page.locator(`label[for="${forAttribute}"]`);
     const textContent = await locator.textContent();
-    const trimmedText = textContent?.trim();
+    const trimmedText = textContent?.trim() ?? null;
 
     if (trimmedText !== expectedText) {
         console.error(
-            `Error: Expected text "${expectedText}" but found "${trimmedText}" for label with 'for' attribute: ${forAttribute}`
+            technicalLogs.labelTextMismatch(
+                expectedText,
+                trimmedText,
+                forAttribute
+            )
         );
     }
 

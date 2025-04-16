@@ -1,5 +1,7 @@
 import { Locator, expect } from '@playwright/test';
 
+import { validationLogs } from '@dicts';
+
 export async function checkPlaceholder(
     element: Locator,
     expectedPlaceholder: string
@@ -8,7 +10,11 @@ export async function checkPlaceholder(
 
     if (placeholder !== expectedPlaceholder) {
         console.error(
-            `Error: Expected placeholder "${expectedPlaceholder}" but found "${placeholder}" for element: ${element}`
+            validationLogs.unexpectedPlaceholder(
+                expectedPlaceholder,
+                placeholder,
+                element.toString()
+            )
         );
     }
 

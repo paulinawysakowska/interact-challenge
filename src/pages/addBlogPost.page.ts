@@ -7,8 +7,8 @@ import {
 import {
     addBlogPostCopy,
     addBlogPostElements,
-    addBlogPostLogs,
     getAddBlogPostLocators,
+    validationLogs,
 } from '@dicts';
 import { AddBlogPostLocators } from '@types';
 import {
@@ -64,7 +64,7 @@ export class AddBlogPost {
             if (!isEmpty) {
                 const actualText = await check.element.textContent();
                 console.error(
-                    addBlogPostLogs.fieldNotEmpty(check.fieldName, actualText)
+                    validationLogs.fieldNotEmpty(check.fieldName, actualText)
                 );
             }
             expect(isEmpty).toBe(true);
@@ -76,7 +76,7 @@ export class AddBlogPost {
             const isEmpty = await checkTextFieldEmptyStatus(check.element);
             if (isEmpty) {
                 console.error(
-                    addBlogPostLogs.fieldShouldNotBeEmpty(check.fieldName)
+                    validationLogs.fieldShouldNotBeEmpty(check.fieldName)
                 );
             }
             expect(isEmpty).toBe(false);
