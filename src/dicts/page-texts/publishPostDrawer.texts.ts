@@ -1,4 +1,4 @@
-export const publishPostDrawerCopy = {
+export const publishPostDrawerTexts = {
     drawerHeader: 'What would you like to do next?',
     publishTxt: 'Publish?',
     // saveTxt: 'Save',

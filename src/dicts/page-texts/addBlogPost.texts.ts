@@ -1,4 +1,4 @@
-export const addBlogPostCopy = {
+export const addBlogPostTexts = {
     placeholders: {
         postTitle: 'Click to add Post Title',
         postSummary: 'Click to add Post Summary',

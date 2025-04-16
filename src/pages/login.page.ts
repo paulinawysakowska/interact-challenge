@@ -4,7 +4,7 @@ import {
     loginPageLabelChecks,
     loginPagePlaceholderChecks,
 } from '@assertion-data';
-import { getLoginPageLocators, loginPageCopy } from '@dicts';
+import { getLoginPageLocators, loginPageTexts } from '@dicts';
 import { LoginPageLocators } from '@types';
 import {
     checkPlaceholder,
@@ -51,7 +51,7 @@ export class LoginPage {
     }
 
     async checkLoginButtonText(): Promise<void> {
-        const expectedText = loginPageCopy.loginButton;
+        const expectedText = loginPageTexts.loginButton;
         await checkTextContent(this.locators.loginButton, expectedText);
     }
 
